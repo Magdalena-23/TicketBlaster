@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const authRoute = require("./routes/auth");
 const eventsRoute = require("./routes/events");
+const usersRoute = require("./routes/users");
 
 const api = express();
 
@@ -13,6 +14,7 @@ mongoose.connect(
 api.use(express.json());
 api.use("/api/auth", authRoute);
 api.use("/api/events", eventsRoute);
+api.use("/api/users", usersRoute);
 
 api.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

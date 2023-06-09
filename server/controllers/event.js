@@ -41,7 +41,7 @@ const getEvent = async (req, res, next) => {
   }
 };
 
-const getAllEvent = async (req, res, next) => {
+const getAllEvents = async (req, res, next) => {
   try {
     const events = await Event.find({});
     res.status(200).json(events);
@@ -55,5 +55,5 @@ module.exports = {
   updateEvent,
   deleteEvent,
   getEvent,
-  getAllEvent,
+  getAllEvents,
 };
