@@ -57,10 +57,13 @@ const login = async (req, res) => {
     }
 
     const token = jwt.sign(
-      { id: user._id, isAdmin: user.isAdmin },
+      { _id: user._id, isAdmin: user.isAdmin },
       process.env.JWT
     );
-    res.status(200).send({ message: "Login Successful", token });
+    res
+      .header("auth-token", token)
+      .status(200)
+      .send({ message: "Login Successful", token });
   } catch (err) {
     console.log(err);
     res.status(500).send("ISE");
