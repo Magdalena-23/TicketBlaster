@@ -10,5 +10,19 @@ html {
 
 body {
   margin: 0;
-  background-color: #3f3f3f;
+  padding-top: 70px;
+}
+
+input,
+button {
+  font: inherit;
+}
+
+input:focus {
+  outline: none;
+}
+
+.content {
+  min-height: calc(100vh - 140px);
+  margin: 0 10%;
 }

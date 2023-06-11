@@ -1,0 +1,13 @@
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.input-wrapper input {
+  height: 42px;
+  border-radius: 21px;
+  border: 1px solid #000000;
+  padding: 9px 15px;
+  color: #000000;
+}

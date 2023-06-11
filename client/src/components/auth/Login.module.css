@@ -1,0 +1,32 @@
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0px;
+}
+
+.form-actions a {
+  text-decoration: underline;
+}
+
+.btn {
+  border: 1px solid #ff48ab;
+  font: inherit;
+  font-size: 16px;
+  color: #ffffff;
+  background-color: #ff48ab;
+  border-radius: 20px;
+  padding: 11px 38px;
+  cursor: pointer;
+}
+
+.register {
+  border: 2px solid #ef46ab;
+  height: 42px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 21px;
+  color: #000000;
+}
