@@ -1,6 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import HeroSection from "./components/Events/HeroSection";
 import Header from "./components/Layout/Header";
 import Login from "./components/auth/Login";
 import MusicalConcerts from "./components/Events/MusicalConcerts";
@@ -9,6 +8,7 @@ import Register from "./components/auth/Register";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import ResetPassword from "./components/auth/ResetPassword";
 import Footer from "./components/Layout/Footer";
+import Home from "./components/Events/Home";
 
 function App() {
   return (
@@ -17,7 +17,7 @@ function App() {
         <Header />
         <div className="content">
           <Routes>
-            <Route exact path="/" element={<HeroSection />} />
+            <Route exact path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
