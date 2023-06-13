@@ -1,6 +1,6 @@
-import Navigation from "../UI/Navigation";
+import Navigation from "../../common/Navigation";
 import classes from "./Footer.module.css";
-import LayoutComponent from "./LayoutComponent";
+import LayoutComponent from "../LayoutComponent/LayoutComponent";
 
 const Footer = () => {
   return (

@@ -1,5 +1,5 @@
 import React from "react";
-import EventItem from "./EventItem";
+import EventItem from "../../components/events/EventItem";
 // import classes from "./EventItem.module.css";
 
 function MusicalConcerts() {

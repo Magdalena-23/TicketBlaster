@@ -1,7 +1,7 @@
-import Navigation from "../UI/Navigation";
+import Navigation from "../../common/Navigation";
 import classes from "./Header.module.css";
 import { NavLink } from "react-router-dom";
-import LayoutComponent from "./LayoutComponent";
+import LayoutComponent from "../LayoutComponent/LayoutComponent";
 
 const Header = () => {
   return (

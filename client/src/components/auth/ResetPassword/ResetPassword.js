@@ -1,8 +1,8 @@
 import React from "react";
 import classes from "./ResetPassword.module.css";
-import FormWrapper from "../UI/FormWrapper";
-import Input from "../UI/Input";
-import { LinkButton, FormButton } from "../UI/FormButtons";
+import FormWrapper from "../../common/FormWrapper";
+import Input from "../../common/Input";
+import { LinkButton, FormButton } from "../../common/FormButtons";
 
 function ResetPassword() {
   return (

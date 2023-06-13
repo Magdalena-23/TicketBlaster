@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 import classes from "./Login.module.css";
-import FormWrapper from "../UI/FormWrapper";
-import Input from "../UI/Input";
-import { LinkButton } from "../UI/FormButtons";
+import FormWrapper from "../../common/FormWrapper";
+import Input from "../../common/Input";
+import { LinkButton } from "../../common/FormButtons";
 
 const Login = () => {
   return (

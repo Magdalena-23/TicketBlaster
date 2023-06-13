@@ -1,8 +1,8 @@
 import React from "react";
 import classes from "./ForgotPassword.module.css";
-import FormWrapper from "../UI/FormWrapper";
-import Input from "../UI/Input";
-import { FormButton, LinkButton } from "../UI/FormButtons";
+import FormWrapper from "../../common/FormWrapper";
+import Input from "../../common/Input";
+import { FormButton, LinkButton } from "../../common/FormButtons";
 
 function ForgotPassword() {
   return (

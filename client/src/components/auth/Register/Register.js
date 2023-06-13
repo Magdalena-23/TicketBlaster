@@ -1,9 +1,8 @@
 import React from "react";
-
-import FormWrapper from "../UI/FormWrapper";
-import Input from "../UI/Input";
+import FormWrapper from "../../common/FormWrapper";
+import Input from "../../common/Input";
 import classes from "./Register.module.css";
-import { FormButton, LinkButton } from "../UI/FormButtons";
+import { FormButton, LinkButton } from "../../common/FormButtons";
 
 function Register() {
   return (

@@ -1,6 +1,9 @@
-import classes from "./HeroSection.module.css";
+import React from "react";
+import MusicalConcerts from "../MusicalConcerts/MusicalConcerts";
+import ComedyShows from "../StandUpComedy/ComedyShows";
+import classes from "./Home.module.css";
 
-const HeroSection = () => {
+function Home() {
   return (
     <>
       <div className={classes.container}>
@@ -19,8 +22,12 @@ const HeroSection = () => {
           <button>Get tickets</button>
         </div>
       </div>
+      <div className={classes["home-grid"]}>
+        <MusicalConcerts />
+        <ComedyShows />
+      </div>
     </>
   );
-};
+}
 
-export default HeroSection;
+export default Home;

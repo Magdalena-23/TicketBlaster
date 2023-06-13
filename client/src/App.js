@@ -1,15 +1,15 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 
-import Header from "./components/Layout/Header";
-import Login from "./components/auth/Login";
-import MusicalConcerts from "./components/Events/MusicalConcerts";
-import ComedyShows from "./components/Events/ComedyShows";
-import Register from "./components/auth/Register";
-import ForgotPassword from "./components/auth/ForgotPassword";
-import ResetPassword from "./components/auth/ResetPassword";
-import Footer from "./components/Layout/Footer";
-import Home from "./components/Events/Home";
-import LayoutComponent from "./components/Layout/LayoutComponent";
+import Header from "./components/layout/Header/Header";
+import Login from "./components/auth/Login/Login";
+import MusicalConcerts from "./pages/MusicalConcerts/MusicalConcerts";
+import ComedyShows from "./pages/StandUpComedy/ComedyShows";
+import Register from "./components/auth/Register/Register";
+import ForgotPassword from "./components/auth/ForgotPassword/ForgotPassword";
+import ResetPassword from "./components/auth/ResetPassword/ResetPassword";
+import Footer from "./components/layout/Footer/Footer";
+import Home from "./pages/Home/Home";
+import LayoutComponent from "./components/layout/LayoutComponent/LayoutComponent";
 
 function App() {
   return (
