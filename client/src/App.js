@@ -9,13 +9,14 @@ import ForgotPassword from "./components/auth/ForgotPassword";
 import ResetPassword from "./components/auth/ResetPassword";
 import Footer from "./components/Layout/Footer";
 import Home from "./components/Events/Home";
+import LayoutComponent from "./components/Layout/LayoutComponent";
 
 function App() {
   return (
-    <>
-      <BrowserRouter>
+    <BrowserRouter>
+      <div className="container">
         <Header />
-        <div className="content">
+        <LayoutComponent>
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
@@ -25,10 +26,10 @@ function App() {
             <Route path="/musical-concerts" element={<MusicalConcerts />} />
             <Route path="/comedy-shows" element={<ComedyShows />} />
           </Routes>
-        </div>
-        <Footer />
-      </BrowserRouter>
-    </>
+        </LayoutComponent>
+      </div>
+      <Footer />
+    </BrowserRouter>
   );
 }
 

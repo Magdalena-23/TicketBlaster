@@ -5,7 +5,7 @@ function Input(props) {
   return (
     <div className={classes["input-wrapper"]}>
       <label htmlFor={props.id}>{props.label}</label>
-      <input type={props.type} id={props.id} />
+      <input type={props.type} id={props.id} onChange={props.onChange} />
     </div>
   );
 }

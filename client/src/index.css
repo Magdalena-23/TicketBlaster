@@ -9,8 +9,15 @@ html {
 }
 
 body {
+  height: 100%;
   margin: 0;
   padding-top: 70px;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 140.8px);
 }
 
 input,
@@ -20,9 +27,4 @@ button {
 
 input:focus {
   outline: none;
-}
-
-.content {
-  min-height: calc(100vh - 140px);
-  margin: 0 10%;
 }

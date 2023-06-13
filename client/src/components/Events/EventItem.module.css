@@ -1,12 +1,14 @@
 .event-item {
   display: flex;
   align-items: center;
+  margin-bottom: 40px;
   gap: 20px;
 }
 
 .img-container {
   width: 260px;
   height: 150px;
+  flex-shrink: 0;
 }
 
 .img-container img {
@@ -58,7 +60,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 40px;
-  padding: 20px 0px 100px 0px;
+  /* padding: 20px 0px 100px 0px; */
 }
 
 h1 {

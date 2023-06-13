@@ -4,9 +4,11 @@ import LayoutComponent from "./LayoutComponent";
 
 const Footer = () => {
   return (
-    <LayoutComponent>
-      <Navigation />
-      <div>
+    <LayoutComponent styles={classes.styles} layout={classes.layout}>
+      <div className={classes.footer}>
+        <Navigation />
+      </div>
+      <div className={classes.footer}>
         <span className={classes.span}>Copyright TicketBlaster 2023</span>
       </div>
     </LayoutComponent>

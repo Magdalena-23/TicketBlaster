@@ -1,3 +1,21 @@
+.footer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.styles {
+  background-color: #000;
+  padding: 10px 0px;
+  color: #d3d3d3;
+  z-index: 10;
+}
+
+.layout {
+  display: flex;
+  justify-content: space-between;
+}
+
 .span {
   font-size: 14px;
 }

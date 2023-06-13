@@ -4,7 +4,7 @@ import classes from "./Navigation.module.css";
 
 function Navigation() {
   return (
-    <div>
+    <>
       <NavLink to="/">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +47,7 @@ function Navigation() {
           </li>
         </ul>
       </nav>
-    </div>
+    </>
   );
 }
 

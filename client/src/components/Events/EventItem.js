@@ -13,7 +13,12 @@ function EventItem() {
       <div className={classes.desc}>
         <h2>Incubus</h2>
         <span className={classes.date}>June 9th, 2023</span>
-        <p>Lorem ipsum dolor sit amet, consectetur Lo</p>
+        <p>
+          Lorem ipsum dolor sit amet, consectetur LoLorem ipsum dolor sit amet,
+          consectetur LoLorem ipsum dolor sit amet, consectetur LoLorem ipsum
+          dolor sit amet, consectetur LoLorem ipsum dolor sit amet, consectetur
+          Lo
+        </p>
         <div>
           <span>Zagreb, Croatia</span>
           <button className={classes.btn}>Get tickets</button>

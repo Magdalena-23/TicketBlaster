@@ -1,3 +1,24 @@
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.styles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #000000;
+  padding: 10px 0px;
+  color: #d3d3d3;
+  z-index: 10;
+}
+
+.layout {
+  display: flex;
+  justify-content: space-between;
+}
+
 .btn {
   cursor: pointer;
   font: inherit;
@@ -14,4 +35,11 @@
   color: #000000;
   background-color: #ff48ab;
   border-radius: 20px;
+}
+
+.search-bar input {
+  width: 300px;
+  padding: 10px 25px;
+  border-radius: 20px;
+  font: inherit;
 }
