@@ -1,26 +1,18 @@
 import React from "react";
 import classes from "./EventItem.module.css";
 
-function EventItem() {
+function EventItem(props) {
   return (
     <div className={classes["event-item"]}>
       <div className={classes["img-container"]}>
-        <img
-          src="https://www.adorama.com/alc/wp-content/uploads/2018/11/landscape-photography-tips-yosemite-valley-feature.jpg"
-          alt="event"
-        />
+        <img src={props.img} alt="event" />
       </div>
       <div className={classes.desc}>
-        <h2>Incubus</h2>
-        <span className={classes.date}>June 9th, 2023</span>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur LoLorem ipsum dolor sit amet,
-          consectetur LoLorem ipsum dolor sit amet, consectetur LoLorem ipsum
-          dolor sit amet, consectetur LoLorem ipsum dolor sit amet, consectetur
-          Lo
-        </p>
+        <h2>{props.artist}</h2>
+        <span className={classes.date}>{props.date}</span>
+        <p>{props.description}</p>
         <div>
-          <span>Zagreb, Croatia</span>
+          <span>{props.location}</span>
           <button className={classes.btn}>Get tickets</button>
         </div>
       </div>

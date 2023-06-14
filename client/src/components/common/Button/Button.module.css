@@ -1,12 +1,16 @@
+.button {
+  cursor: pointer;
+  font: inherit;
+  border-radius: 20px;
+  font-weight: 700;
+}
+
 .form-button {
   border: 1px solid #ff48ab;
   font-size: 16px;
-  /* padding: 10px 38px; */
   color: #ffffff;
   background-color: #ff48ab;
-  border-radius: 20px;
   height: 42px;
-  cursor: pointer;
 }
 
 .link-button {
@@ -19,5 +23,4 @@
   padding: 10px;
   border-radius: 21px;
   color: #000000;
-  cursor: pointer;
 }

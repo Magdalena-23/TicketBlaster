@@ -1,7 +1,8 @@
-import Navigation from "../../common/Navigation";
+import Navigation from "../../common/Nav/Navigation";
 import classes from "./Header.module.css";
 import { NavLink } from "react-router-dom";
 import LayoutComponent from "../LayoutComponent/LayoutComponent";
+import Button from "../../common/Button/Button";
 
 const Header = () => {
   return (
@@ -20,7 +21,7 @@ const Header = () => {
           }
           end
         >
-          <button className={classes.btn}>Login</button>
+          <Button className={classes.btn}>Login</Button>
         </NavLink>
         <NavLink
           to="/register"
@@ -29,7 +30,7 @@ const Header = () => {
           }
           end
         >
-          <button className={classes.btn}>Create Account</button>
+          <Button className={classes.btn}>Create Account</Button>
         </NavLink>
       </div>
     </LayoutComponent>

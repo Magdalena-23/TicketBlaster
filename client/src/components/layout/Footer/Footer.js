@@ -1,4 +1,4 @@
-import Navigation from "../../common/Navigation";
+import Navigation from "../../common/Nav/Navigation";
 import classes from "./Footer.module.css";
 import LayoutComponent from "../LayoutComponent/LayoutComponent";
 

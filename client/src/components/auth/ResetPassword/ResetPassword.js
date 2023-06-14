@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import classes from "./ResetPassword.module.css";
 import FormWrapper from "../../common/FormWrapper";
 import Input from "../../common/Input";
-import { LinkButton, FormButton } from "../../common/FormButtons";
+import Button from "../../common/Button/Button";
 
 function ResetPassword() {
   return (
@@ -11,8 +12,10 @@ function ResetPassword() {
       <Input type="password" id="password" label="Password" />
       <Input type="password" id="confirm-password" label="Re-type password" />
       <div className={classes.spacing}>
-        <FormButton className={classes["form-button"]} text="Reset Password" />
-        <LinkButton linkTo="/login" text="Back to login" />
+        <Button type="form">Reset Password</Button>
+        <Link to="/login">
+          <Button type="link">Back to login</Button>
+        </Link>
       </div>
     </FormWrapper>
   );

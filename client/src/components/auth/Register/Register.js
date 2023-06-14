@@ -1,8 +1,9 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import FormWrapper from "../../common/FormWrapper";
 import Input from "../../common/Input";
 import classes from "./Register.module.css";
-import { FormButton, LinkButton } from "../../common/FormButtons";
+import Button from "../../common/Button/Button";
 
 function Register() {
   return (
@@ -13,9 +14,11 @@ function Register() {
       <Input type="password" id="password" label="Password" />
       <Input type="password" id="confirm-password" label="Re-type Password" />
       <div className={classes.btn}>
-        <FormButton text="Create Account" />
+        <Button type="form">Create account</Button>
       </div>
-      <LinkButton linkTo="/login" text="Already have an account?" />
+      <Link to="/login">
+        <Button type="link">Already have an account?</Button>
+      </Link>
     </FormWrapper>
   );
 }

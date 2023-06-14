@@ -17,6 +17,10 @@
   border-radius: 20px;
 }
 
+.desc {
+  width: 100%;
+}
+
 .desc p {
   margin: 8px 0px;
   display: -webkit-box;
@@ -56,14 +60,8 @@
   cursor: pointer;
 }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 40px;
-  /* padding: 20px 0px 100px 0px; */
-}
-
 h1 {
   color: black;
   font-size: 44px;
+  margin-top: 50px;
 }
