@@ -9,15 +9,19 @@ html {
 }
 
 body {
-  height: 100%;
+  min-height: 100vh;
   margin: 0;
   padding-top: 70px;
+  position: relative;
 }
 
-.container {
+.wrapper {
+  margin-bottom: 150px;
+}
+
+.App {
   display: flex;
   flex-direction: column;
-  min-height: calc(100vh - 140.8px);
 }
 
 input,

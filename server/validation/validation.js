@@ -25,8 +25,9 @@ const loginValidation = (data) => {
     return "Invalid email";
   }
   if (password.trim().length === 0 || password.trim().length < 6) {
-    return "Wrong email or password";
+    return "Wrong password";
   }
+
   return null;
 };
 

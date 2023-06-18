@@ -5,3 +5,10 @@
 .btn button {
   width: 100%;
 }
+
+.error {
+  color: red;
+  font-size: 21px;
+  position: absolute;
+  top: 185px;
+}

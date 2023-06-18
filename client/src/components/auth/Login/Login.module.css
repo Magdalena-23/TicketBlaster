@@ -20,14 +20,7 @@
 
 .error {
   color: red;
-  font-weight: bold;
-}
-
-.invalid {
-  border: 1px solid #b40e0e;
-  background-color: #fddddd;
-}
-
-.valid {
-  border: 1px solid #000000;
+  font-size: 21px;
+  position: absolute;
+  top: 185px;
 }

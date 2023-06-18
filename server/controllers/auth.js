@@ -53,8 +53,10 @@ const login = async (req, res) => {
     if (!user) return res.status(404).send("User not found!");
 
     if (!bcrypt.compareSync(req.body.password, user.password)) {
-      return res.status(400).send("Wrong email or password!");
+      return res.status(400).send("Wrong password!");
     }
+
+    const { _id } = user;
 
     const token = jwt.sign(
       { _id: user._id, isAdmin: user.isAdmin },
@@ -63,7 +65,7 @@ const login = async (req, res) => {
     res
       .header("auth-token", token)
       .status(200)
-      .send({ message: "Login Successful", token });
+      .send({ message: "Login Successful", user: { _id }, token });
   } catch (err) {
     console.log(err);
     res.status(500).send("ISE");

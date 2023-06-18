@@ -5,36 +5,47 @@ import Input from "../../common/Input";
 import Button from "../../common/Button/Button";
 import axios from "../../../api/axios";
 import { useState } from "react";
-import {
-  registerValidation,
-  loginValidation,
-  forgotPasswordValidation,
-  resetPasswordValidation,
-} from "../../../validation/validation";
+
 const LOGIN_URL = "api/auth/login";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    console.log(email);
+    setEmailError("");
+    setErrorMsg("");
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
+    setPasswordError("");
+    setErrorMsg("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const validateError = loginValidation(email, password);
-    if (validateError) {
-      console.log(validateError.emailMsg);
+    const emailPattern = /\S+@\S+\.\S+/;
+
+    if (email.trim().length === 0) {
+      setEmailError("Email is required");
+      return;
+    } else if (!emailPattern.test(email)) {
+      setEmailError("Invalid email");
+      return;
+    } else if (password.trim().length === 0) {
+      setPasswordError("Password is required");
+      return;
+    } else if (password.trim().length < 6) {
+      setPasswordError("Password must be at least 6 characters");
+      return;
     }
+
     try {
       const response = await axios.post(
         LOGIN_URL,
@@ -47,21 +58,15 @@ const Login = () => {
       const accessToken = response?.data?.token;
       localStorage.setItem("token", accessToken);
       // props.onLogIn();
-      window.location.href = "/";
+      window.location.href = "/tickets-history";
     } catch (err) {
       console.log(err);
       if (!err?.response) {
         setErrorMsg("No Server Response");
-      } else if (
-        err.response.status === 404 &&
-        err.response.data.error === "Email not found"
-      ) {
-        setErrorMsg(err.response.data.error);
-      } else if (
-        err.response.status === 401 &&
-        err.response.data.error === "Wrong email or password"
-      ) {
-        setErrorMsg(err.response.data.error);
+      } else if (err.response.status === 404) {
+        setEmailError(err.response.data);
+      } else if (err.response.status === 400) {
+        setPasswordError(err.response.data);
       } else {
         setErrorMsg("Login Failed");
       }
@@ -71,13 +76,14 @@ const Login = () => {
   return (
     <FormWrapper onSubmit={handleSubmit}>
       <h1>Log In</h1>
+      {errorMsg && <span className={classes.error}>{errorMsg}</span>}
       <Input
         type="email"
         id="email"
         label="Email"
         value={email}
         onChange={handleEmailChange}
-        className={errorMsg ? classes.invalid : classes.valid}
+        error={emailError}
       />
       <Input
         type="password"
@@ -85,9 +91,8 @@ const Login = () => {
         label="Password"
         value={password}
         onChange={handlePasswordChange}
-        className={errorMsg ? classes.invalid : classes.valid}
+        error={passwordError}
       />
-      {errorMsg && <span className={classes.error}>{errorMsg}</span>}
       <div className={classes["form-actions"]}>
         <Link to="/forgot-password">
           <span>Forgot Password?</span>

@@ -3,7 +3,7 @@ import classes from "./EventItem.module.css";
 
 function EventItem(props) {
   return (
-    <div className={classes["event-item"]}>
+    <div className={`${classes["event-item"]} ${props.className}`}>
       <div className={classes["img-container"]}>
         <img src={props.img} alt="event" />
       </div>
@@ -13,7 +13,7 @@ function EventItem(props) {
         <p>{props.description}</p>
         <div>
           <span>{props.location}</span>
-          <button className={classes.btn}>Get tickets</button>
+          <button className={classes.btn}>{props.text}</button>
         </div>
       </div>
     </div>

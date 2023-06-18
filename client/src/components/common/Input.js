@@ -10,8 +10,9 @@ function Input(props) {
         id={props.id}
         onChange={props.onChange}
         value={props.value}
-        className={props.className}
+        className={props.error ? classes.invalid : classes.valid}
       />
+      {props.error && <span className={classes.error}>{props.error}</span>}
     </div>
   );
 }

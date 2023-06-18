@@ -18,6 +18,7 @@ function ComedyShows(props) {
               location={concert.location}
               description={concert.description}
               img={concert.img}
+              text="Get tickets"
             />
           );
         })}

@@ -1,4 +1,5 @@
 require("dotenv").config();
+const cors = require("cors");
 const mongoose = require("mongoose");
 const express = require("express");
 const authRoute = require("./routes/auth");
@@ -9,6 +10,13 @@ const api = express();
 
 mongoose.connect(
   `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@${process.env.DB_URL}.net/${process.env.DB_NAME}?retryWrites=true&w=majority`
+);
+
+api.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
 );
 
 api.use(express.json());
