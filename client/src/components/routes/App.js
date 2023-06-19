@@ -12,7 +12,7 @@ import Home from "../../pages/Home/Home";
 import LayoutComponent from "../layout/LayoutComponent/LayoutComponent";
 import TicketsHistory from "../../pages/TicketsHistory/TicketsHistory";
 import LoggedInNav from "../layout/LoggedInNav/LoggedInNav";
-import PrivateRoute from "./PrivateRoute";
+// import PrivateRoute from "./PrivateRoute";
 
 const App = () => {
   return (
@@ -36,9 +36,9 @@ const App = () => {
               <Route
                 path="/tickets-history"
                 element={
-                  <PrivateRoute>
-                    <TicketsHistory />
-                  </PrivateRoute>
+                  // <PrivateRoute>
+                  <TicketsHistory />
+                  // </PrivateRoute>
                 }
               />
             </Routes>

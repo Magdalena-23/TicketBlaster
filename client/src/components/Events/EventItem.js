@@ -12,7 +12,9 @@ function EventItem(props) {
         <span className={classes.date}>{props.date}</span>
         <p>{props.description}</p>
         <div>
-          <span>{props.location}</span>
+          <span>
+            {props.city}, {props.country}
+          </span>
           <button className={classes.btn}>{props.text}</button>
         </div>
       </div>

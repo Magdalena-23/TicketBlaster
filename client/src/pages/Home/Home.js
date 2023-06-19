@@ -1,14 +1,49 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../../components/common/Button/Button";
 import classes from "./Home.module.css";
 import EventItem from "../../components/events/EventItem";
-import { concertsData } from "../../dummyData";
+import { format } from "date-fns";
+import axios from "../../api/axios";
 
 function Home() {
+  const [concerts, setConcerts] = useState([]);
+  const [comedyShows, setComedyShows] = useState([]);
+
   const handleClick = () => {
     window.scrollTo(0, 0);
   };
+
+  function formatWithOrdinalSuffix(date) {
+    return format(date, "MMMM do, yyyy");
+  }
+
+  useEffect(() => {
+    const fetchConcerts = async () => {
+      try {
+        const response = await axios.get("/api/events?type=Concert&limit=5");
+        const concerts = response.data;
+        setConcerts(concerts);
+        console.log(concerts);
+      } catch (error) {
+        console.error("Error fetching concerts:", error);
+      }
+    };
+
+    const fetchComedyShows = async () => {
+      try {
+        const response = await axios.get("/api/events?type=Comedy&limit=5");
+        const comedyShows = response.data;
+        setComedyShows(comedyShows);
+        console.log(comedyShows);
+      } catch (error) {
+        console.error("Error fetching concerts:", error);
+      }
+    };
+
+    fetchConcerts();
+    fetchComedyShows();
+  }, []);
   return (
     <>
       <div className={classes.container}>
@@ -30,14 +65,14 @@ function Home() {
       <div className={classes["home-grid"]}>
         <div>
           <h1>Musical Concerts</h1>
-          {/* povik do backend i mapiranje event.map((musicalEvent) => {<eventItem/>}) */}
-          {concertsData.map((concert) => {
+          {concerts.map((concert) => {
             return (
               <EventItem
                 key={concert.id}
                 artist={concert.artist}
-                date={concert.date}
-                location={concert.location}
+                date={formatWithOrdinalSuffix(new Date(concert.date))}
+                city={concert.city}
+                country={concert.country}
                 description={concert.description}
                 img={concert.img}
                 text="Get tickets"
@@ -50,15 +85,17 @@ function Home() {
         </div>
         <div>
           <h1>Stand-up Comedy</h1>
-          {concertsData.map((concert) => {
+          {comedyShows.map((comedyShow) => {
             return (
               <EventItem
-                key={concert.id}
-                artist={concert.artist}
-                date={concert.date}
-                location={concert.location}
-                description={concert.description}
-                img={concert.img}
+                key={comedyShow.id}
+                artist={comedyShow.artist}
+                date={formatWithOrdinalSuffix(new Date(comedyShow.date))}
+                location={comedyShow.location}
+                city={comedyShow.city}
+                country={comedyShow.country}
+                description={comedyShow.description}
+                img={comedyShow.img}
                 text="Get tickets"
               />
             );

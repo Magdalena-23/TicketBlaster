@@ -23,6 +23,7 @@
 
 .desc p {
   margin: 8px 0px;
+  height: 57px;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;

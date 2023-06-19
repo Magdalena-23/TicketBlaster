@@ -12,7 +12,7 @@ function Button(props) {
   return (
     <button
       className={`${buttonClass} ${props.className}`}
-      // onClick={onClick}
+      onClick={props.onClick}
     >
       {props.children}
     </button>
