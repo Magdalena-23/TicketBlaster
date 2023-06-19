@@ -45,10 +45,19 @@ const getAllEvents = async (req, res, next) => {
   try {
     const { type, limit } = req.query;
     const currentDate = new Date();
-    const upcomingEvents = await Event.find({
-      eventType: type,
-      date: { $gte: currentDate },
-    })
+    // const upcomingEvents = await Event.find({
+    //   eventType: type,
+    //   date: { $gte: currentDate },
+    // })
+    //   .sort({ date: 1 })
+    //   .limit(limit);
+    let query = { date: { $gte: currentDate } };
+
+    if (type) {
+      query.eventType = type;
+    }
+
+    const upcomingEvents = await Event.find(query)
       .sort({ date: 1 })
       .limit(limit);
 

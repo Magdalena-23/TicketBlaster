@@ -7,6 +7,7 @@ import { format } from "date-fns";
 import axios from "../../api/axios";
 
 function Home() {
+  const [heroEvent, setHeroEvent] = useState();
   const [concerts, setConcerts] = useState([]);
   const [comedyShows, setComedyShows] = useState([]);
 
@@ -19,12 +20,22 @@ function Home() {
   }
 
   useEffect(() => {
+    const fetchSoonestEvent = async () => {
+      try {
+        const response = await axios.get("/api/events?limit=1");
+        const soonestEvent = response.data;
+        setHeroEvent(soonestEvent);
+        console.log(soonestEvent);
+      } catch (error) {
+        console.error("Error fetching hero event:", error);
+      }
+    };
+
     const fetchConcerts = async () => {
       try {
         const response = await axios.get("/api/events?type=Concert&limit=5");
         const concerts = response.data;
         setConcerts(concerts);
-        console.log(concerts);
       } catch (error) {
         console.error("Error fetching concerts:", error);
       }
@@ -35,31 +46,32 @@ function Home() {
         const response = await axios.get("/api/events?type=Comedy&limit=5");
         const comedyShows = response.data;
         setComedyShows(comedyShows);
-        console.log(comedyShows);
       } catch (error) {
         console.error("Error fetching concerts:", error);
       }
     };
 
+    fetchSoonestEvent();
     fetchConcerts();
     fetchComedyShows();
   }, []);
   return (
     <>
       <div className={classes.container}>
-        <img
-          src="https://www.adorama.com/alc/wp-content/uploads/2018/11/landscape-photography-tips-yosemite-valley-feature.jpg"
-          alt="concert"
-        />
+        <img src={heroEvent[0].img} alt="event" />
         <div className={classes["event-info"]}>
           <div>
-            <h3>Rage Against The Machine</h3>
+            <h3>{heroEvent[0].artist}</h3>
             <div>
-              <span>June 9th 2023, </span>
-              <span>Vienna, Austria</span>
+              <span>
+                {formatWithOrdinalSuffix(new Date(heroEvent[0].date))},
+              </span>
+              <span className={classes.location}>
+                {heroEvent[0].city}, {heroEvent[0].country}
+              </span>
             </div>
           </div>
-          <button>Get tickets</button>
+          <Button className={classes.herobtn}>Get tickets</Button>
         </div>
       </div>
       <div className={classes["home-grid"]}>
