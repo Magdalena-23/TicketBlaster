@@ -7,7 +7,7 @@ import { format } from "date-fns";
 import axios from "../../api/axios";
 
 function Home() {
-  const [heroEvent, setHeroEvent] = useState();
+  const [heroEvent, setHeroEvent] = useState({});
   const [concerts, setConcerts] = useState([]);
   const [comedyShows, setComedyShows] = useState([]);
 
@@ -19,13 +19,18 @@ function Home() {
     return format(date, "MMMM do, yyyy");
   }
 
+  // const formatDate = (dateString) => {
+  //   const date = new Date(dateString);
+  //   const formattedDate = format(date, "MMMM do, yyyy");
+  //   return formattedDate;
+  // };
+
   useEffect(() => {
     const fetchSoonestEvent = async () => {
       try {
         const response = await axios.get("/api/events?limit=1");
-        const soonestEvent = response.data;
+        const soonestEvent = response.data[0];
         setHeroEvent(soonestEvent);
-        console.log(soonestEvent);
       } catch (error) {
         console.error("Error fetching hero event:", error);
       }
@@ -58,16 +63,18 @@ function Home() {
   return (
     <>
       <div className={classes.container}>
-        <img src={heroEvent[0].img} alt="event" />
+        <img
+          src="https://www.adorama.com/alc/wp-content/uploads/2018/11/landscape-photography-tips-yosemite-valley-feature.jpg"
+          alt="event"
+        />
         <div className={classes["event-info"]}>
           <div>
-            <h3>{heroEvent[0].artist}</h3>
+            <h3>{heroEvent.artist}</h3>
             <div>
-              <span>
-                {formatWithOrdinalSuffix(new Date(heroEvent[0].date))},
-              </span>
+              {/* <span>{formatWithOrdinalSuffix(new Date(heroEvent.date))}</span> */}
+              {/* <span>{formatDate(heroEvent.date)}, </span> */}
               <span className={classes.location}>
-                {heroEvent[0].city}, {heroEvent[0].country}
+                {heroEvent.city}, {heroEvent.country}
               </span>
             </div>
           </div>

@@ -11,8 +11,9 @@ import Footer from "../layout/Footer/Footer";
 import Home from "../../pages/Home/Home";
 import LayoutComponent from "../layout/LayoutComponent/LayoutComponent";
 import TicketsHistory from "../../pages/TicketsHistory/TicketsHistory";
+import UserDetails from "../../pages/UserDetails/UserDetails";
 import LoggedInNav from "../layout/LoggedInNav/LoggedInNav";
-// import PrivateRoute from "./PrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 
 const App = () => {
   return (
@@ -33,14 +34,12 @@ const App = () => {
               />
               <Route path="/musical-concerts" element={<MusicalConcerts />} />
               <Route path="/comedy-shows" element={<ComedyShows />} />
-              <Route
-                path="/tickets-history"
-                element={
-                  // <PrivateRoute>
-                  <TicketsHistory />
-                  // </PrivateRoute>
-                }
-              />
+              <Route element={<PrivateRoute />}>
+                <Route path="/tickets-history" element={<TicketsHistory />} />
+              </Route>
+              <Route element={<PrivateRoute />}>
+                <Route path="/user-details" element={<UserDetails />} />
+              </Route>
             </Routes>
           </LayoutComponent>
         </div>

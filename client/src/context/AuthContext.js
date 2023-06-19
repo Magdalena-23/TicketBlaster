@@ -4,11 +4,18 @@ const AuthContext = createContext();
 
 const AuthContextProvider = (props) => {
   const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setUser({ token });
+      // Simulate delay for token retrieval
+      setTimeout(() => {
+        setUser({ token });
+        setIsLoading(false);
+      }, 500);
+    } else {
+      setIsLoading(false);
     }
   }, []);
 
@@ -23,7 +30,7 @@ const AuthContextProvider = (props) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, isLoading }}>
       {props.children}
     </AuthContext.Provider>
   );

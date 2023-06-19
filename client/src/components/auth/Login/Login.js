@@ -5,6 +5,7 @@ import Input from "../../common/Input";
 import Button from "../../common/Button/Button";
 import axios from "../../../api/axios";
 import { useState } from "react";
+import { useAuth } from "../../../context/AuthContext";
 
 const LOGIN_URL = "api/auth/login";
 
@@ -14,6 +15,8 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+
+  const { login } = useAuth();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -56,8 +59,7 @@ const Login = () => {
         }
       );
       const accessToken = response?.data?.token;
-      localStorage.setItem("token", accessToken);
-      // props.onLogIn();
+      login(accessToken);
       window.location.href = "/tickets-history";
     } catch (err) {
       console.log(err);

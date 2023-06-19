@@ -14,7 +14,7 @@ function LoggedInNav() {
   const location = useLocation();
   const showSecondNavBar =
     location.pathname === "/tickets-history" ||
-    location.pathname === "/profile";
+    location.pathname === "/user-details";
 
   if (!showSecondNavBar) {
     return null;
@@ -35,7 +35,7 @@ function LoggedInNav() {
           Tickets History
         </NavLink>
         <NavLink
-          to="/profile"
+          to="/user-details"
           className={({ isActive }) =>
             isActive ? classes["active"] : undefined
           }
