@@ -1,7 +1,13 @@
 import React from "react";
 import classes from "./EventItem.module.css";
+import { useNavigate } from "react-router-dom";
+import Button from "../common/Button/Button";
 
 function EventItem(props) {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate(`/event-details/${props.id}`);
+  };
   return (
     <div className={`${classes["event-item"]} ${props.className}`}>
       <div className={classes["img-container"]}>
@@ -15,7 +21,9 @@ function EventItem(props) {
           <span>
             {props.city}, {props.country}
           </span>
-          <button className={classes.btn}>{props.text}</button>
+          <Button className={classes.btn} onClick={handleClick}>
+            {props.text}
+          </Button>
         </div>
       </div>
     </div>

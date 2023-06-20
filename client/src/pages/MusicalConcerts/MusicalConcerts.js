@@ -42,7 +42,8 @@ const MusicalConcerts = () => {
         {concerts.map((concert) => {
           return (
             <EventItem
-              key={concert.id}
+              key={concert._id}
+              id={concert._id}
               artist={concert.artist}
               date={formatWithOrdinalSuffix(new Date(concert.date))}
               city={concert.city}

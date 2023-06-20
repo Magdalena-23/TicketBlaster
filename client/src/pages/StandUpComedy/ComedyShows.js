@@ -42,7 +42,8 @@ const ComedyShows = () => {
         {comedyShows.map((comedyShow) => {
           return (
             <EventItem
-              key={comedyShow.id}
+              key={comedyShow._id}
+              id={comedyShow._id}
               artist={comedyShow.artist}
               date={formatWithOrdinalSuffix(new Date(comedyShow.date))}
               city={comedyShow.city}

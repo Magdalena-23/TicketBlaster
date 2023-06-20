@@ -1,29 +1,22 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import Button from "../../components/common/Button/Button";
 import classes from "./Home.module.css";
 import EventItem from "../../components/events/EventItem";
-import { format } from "date-fns";
 import axios from "../../api/axios";
+import { formatTime } from "../../helpers/timeFormat";
 
 function Home() {
   const [heroEvent, setHeroEvent] = useState({});
   const [concerts, setConcerts] = useState([]);
   const [comedyShows, setComedyShows] = useState([]);
 
+  const navigate = useNavigate();
+
   const handleClick = () => {
     window.scrollTo(0, 0);
   };
-
-  function formatWithOrdinalSuffix(date) {
-    return format(date, "MMMM do, yyyy");
-  }
-
-  // const formatDate = (dateString) => {
-  //   const date = new Date(dateString);
-  //   const formattedDate = format(date, "MMMM do, yyyy");
-  //   return formattedDate;
-  // };
 
   useEffect(() => {
     const fetchSoonestEvent = async () => {
@@ -36,6 +29,10 @@ function Home() {
       }
     };
 
+    fetchSoonestEvent();
+  }, []);
+
+  useEffect(() => {
     const fetchConcerts = async () => {
       try {
         const response = await axios.get("/api/events?type=Concert&limit=5");
@@ -46,18 +43,20 @@ function Home() {
       }
     };
 
+    fetchConcerts();
+  }, []);
+
+  useEffect(() => {
     const fetchComedyShows = async () => {
       try {
         const response = await axios.get("/api/events?type=Comedy&limit=5");
         const comedyShows = response.data;
         setComedyShows(comedyShows);
       } catch (error) {
-        console.error("Error fetching concerts:", error);
+        console.error("Error fetching comedy shows:", error);
       }
     };
 
-    fetchSoonestEvent();
-    fetchConcerts();
     fetchComedyShows();
   }, []);
   return (
@@ -71,14 +70,18 @@ function Home() {
           <div>
             <h3>{heroEvent.artist}</h3>
             <div>
-              {/* <span>{formatWithOrdinalSuffix(new Date(heroEvent.date))}</span> */}
-              {/* <span>{formatDate(heroEvent.date)}, </span> */}
+              <span>{formatTime(heroEvent.date)}</span>
               <span className={classes.location}>
                 {heroEvent.city}, {heroEvent.country}
               </span>
             </div>
           </div>
-          <Button className={classes.herobtn}>Get tickets</Button>
+          <Button
+            onClick={() => navigate(`/event-details/${heroEvent._id}`)}
+            className={classes.herobtn}
+          >
+            Get tickets
+          </Button>
         </div>
       </div>
       <div className={classes["home-grid"]}>
@@ -87,9 +90,10 @@ function Home() {
           {concerts.map((concert) => {
             return (
               <EventItem
-                key={concert.id}
+                key={concert._id}
+                id={concert._id}
                 artist={concert.artist}
-                date={formatWithOrdinalSuffix(new Date(concert.date))}
+                date={formatTime(new Date(concert.date))}
                 city={concert.city}
                 country={concert.country}
                 description={concert.description}
@@ -107,9 +111,10 @@ function Home() {
           {comedyShows.map((comedyShow) => {
             return (
               <EventItem
-                key={comedyShow.id}
+                key={comedyShow._id}
+                id={comedyShow._id}
                 artist={comedyShow.artist}
-                date={formatWithOrdinalSuffix(new Date(comedyShow.date))}
+                date={formatTime(new Date(comedyShow.date))}
                 location={comedyShow.location}
                 city={comedyShow.city}
                 country={comedyShow.country}

@@ -14,8 +14,10 @@ import TicketsHistory from "../../pages/TicketsHistory/TicketsHistory";
 import UserDetails from "../../pages/UserDetails/UserDetails";
 import LoggedInNav from "../layout/LoggedInNav/LoggedInNav";
 import PrivateRoute from "./PrivateRoute";
+import EventDetails from "../../pages/EventDetails/EventDetails";
 
 const App = () => {
+  console.log("app");
   return (
     <BrowserRouter>
       <div className="App">
@@ -34,6 +36,7 @@ const App = () => {
               />
               <Route path="/musical-concerts" element={<MusicalConcerts />} />
               <Route path="/comedy-shows" element={<ComedyShows />} />
+              <Route path="/event-details/:id" element={<EventDetails />} />
               <Route element={<PrivateRoute />}>
                 <Route path="/tickets-history" element={<TicketsHistory />} />
               </Route>

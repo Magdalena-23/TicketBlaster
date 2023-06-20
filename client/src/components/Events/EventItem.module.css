@@ -54,12 +54,10 @@
   font: inherit;
   width: 130px;
   font-size: 14px;
-  border-radius: 20px;
   padding: 9px 28px;
   background-color: #000000;
   color: #ffffff;
   border: none;
-  cursor: pointer;
 }
 
 h1 {

@@ -9,7 +9,6 @@ const AuthContextProvider = (props) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      // Simulate delay for token retrieval
       setTimeout(() => {
         setUser({ token });
         setIsLoading(false);
