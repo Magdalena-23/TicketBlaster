@@ -2,11 +2,31 @@ import Navigation from "../../common/Nav/Navigation";
 import classes from "./Header.module.css";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 import LayoutComponent from "../LayoutComponent/LayoutComponent";
 import Button from "../../common/Button/Button";
+import { useState } from "react";
 
 const Header = () => {
   const { user } = useAuth();
+  const [searchValue, setSearchValue] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleSearch = (event) => {
+    if (event.key === "Enter") {
+      if (searchValue.trim() === "") {
+        return;
+      }
+      navigate(`/search-results?search=${searchValue}`);
+      setSearchValue("");
+    }
+  };
+
   return (
     <LayoutComponent styles={classes.styles} layout={classes.layout}>
       <div className={classes["header"]}>
@@ -14,7 +34,13 @@ const Header = () => {
       </div>
       <div className={classes["header"]}>
         <div className={classes["search-bar"]}>
-          <input type="text" placeholder="Search" />
+          <input
+            type="text"
+            placeholder="Search"
+            onChange={handleChange}
+            onKeyDown={handleSearch}
+            value={searchValue}
+          />
         </div>
         {user ? (
           <NavLink to="/cart">

@@ -41,9 +41,25 @@ const getEvent = async (req, res, next) => {
   }
 };
 
+const getSearchResults = async (req, res, next) => {
+  try {
+    const { search } = req.query;
+    const searchRegex = new RegExp(search, "i");
+
+    const searchResults = await Event.find({
+      $or: [{ artist: searchRegex }, { description: searchRegex }],
+    });
+
+    res.status(200).json(searchResults);
+  } catch (err) {
+    next(err);
+  }
+};
+
 const getAllEvents = async (req, res, next) => {
   try {
     const { type, limit } = req.query;
+    console.log(type);
     const currentDate = new Date();
     // const upcomingEvents = await Event.find({
     //   eventType: type,
@@ -76,4 +92,5 @@ module.exports = {
   deleteEvent,
   getEvent,
   getAllEvents,
+  getSearchResults,
 };

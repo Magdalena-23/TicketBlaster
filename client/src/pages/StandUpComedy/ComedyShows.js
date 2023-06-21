@@ -2,17 +2,13 @@ import React, { useState, useEffect } from "react";
 import EventItem from "../../components/events/EventItem";
 import Button from "../../components/common/Button/Button";
 import classes from "../MusicalConcerts/MusicalConcerts.module.css";
-import { format } from "date-fns";
+import { formatTime } from "../../helpers/timeFormat";
 import axios from "../../api/axios";
 
 const ComedyShows = () => {
   const [comedyShows, setComedyShows] = useState([]);
   const [displayCount, setDisplayCount] = useState(10);
   const [totalComedyShows, setTotalComedyShows] = useState(null);
-
-  function formatWithOrdinalSuffix(date) {
-    return format(date, "MMMM do, yyyy");
-  }
 
   useEffect(() => {
     const fetchComedyShows = async () => {
@@ -45,7 +41,7 @@ const ComedyShows = () => {
               key={comedyShow._id}
               id={comedyShow._id}
               artist={comedyShow.artist}
-              date={formatWithOrdinalSuffix(new Date(comedyShow.date))}
+              date={formatTime(comedyShow.date)}
               city={comedyShow.city}
               country={comedyShow.country}
               description={comedyShow.description}

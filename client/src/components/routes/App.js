@@ -15,6 +15,7 @@ import UserDetails from "../../pages/UserDetails/UserDetails";
 import LoggedInNav from "../layout/LoggedInNav/LoggedInNav";
 import PrivateRoute from "./PrivateRoute";
 import EventDetails from "../../pages/EventDetails/EventDetails";
+import SearchResults from "../../pages/SearchResults/SearchResults";
 
 const App = () => {
   console.log("app");
@@ -36,6 +37,7 @@ const App = () => {
               />
               <Route path="/musical-concerts" element={<MusicalConcerts />} />
               <Route path="/comedy-shows" element={<ComedyShows />} />
+              <Route path="/search-results" element={<SearchResults />} />
               <Route path="/event-details/:id" element={<EventDetails />} />
               <Route element={<PrivateRoute />}>
                 <Route path="/tickets-history" element={<TicketsHistory />} />
