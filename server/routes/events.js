@@ -6,6 +6,7 @@ const {
   getEvent,
   getAllEvents,
   getSearchResults,
+  getSoonestEvent,
 } = require("../controllers/event");
 const { verifyAdmin } = require("../middlewares/verifyToken");
 
@@ -17,6 +18,7 @@ router.delete("/:id", verifyAdmin, deleteEvent);
 
 router.get("/find/:id", getEvent);
 router.get("/", getSearchResults);
-router.get("/", getAllEvents);
+router.get("/type", getAllEvents);
+router.get("/soonest", getSoonestEvent);
 
 module.exports = router;

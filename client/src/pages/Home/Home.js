@@ -6,6 +6,7 @@ import classes from "./Home.module.css";
 import EventItem from "../../components/events/EventItem";
 import axios from "../../api/axios";
 import { formatTime } from "../../helpers/timeFormat";
+import Title from "../../components/common/Title/Title";
 
 function Home() {
   const [heroEvent, setHeroEvent] = useState({});
@@ -21,7 +22,7 @@ function Home() {
   useEffect(() => {
     const fetchSoonestEvent = async () => {
       try {
-        const response = await axios.get("/api/events?limit=1");
+        const response = await axios.get("/api/events/soonest?limit=1");
         const soonestEvent = response.data[0];
         setHeroEvent(soonestEvent);
       } catch (error) {
@@ -35,8 +36,11 @@ function Home() {
   useEffect(() => {
     const fetchConcerts = async () => {
       try {
-        const response = await axios.get("/api/events?type=Concert&limit=5");
+        const response = await axios.get(
+          "/api/events/type?type=Concert&limit=5"
+        );
         const concerts = response.data;
+        console.log(concerts);
         setConcerts(concerts);
       } catch (error) {
         console.error("Error fetching concerts:", error);
@@ -49,8 +53,11 @@ function Home() {
   useEffect(() => {
     const fetchComedyShows = async () => {
       try {
-        const response = await axios.get("/api/events?type=Comedy&limit=5");
+        const response = await axios.get(
+          "/api/events/type?type=Comedy&limit=5"
+        );
         const comedyShows = response.data;
+        console.log(comedyShows);
         setComedyShows(comedyShows);
       } catch (error) {
         console.error("Error fetching comedy shows:", error);
@@ -86,7 +93,7 @@ function Home() {
       </div>
       <div className={classes["home-grid"]}>
         <div>
-          <h1>Musical Concerts</h1>
+          <Title>Musical Concerts</Title>
           {concerts.map((concert) => {
             return (
               <EventItem
@@ -107,7 +114,7 @@ function Home() {
           </Link>
         </div>
         <div>
-          <h1>Stand-up Comedy</h1>
+          <Title>Stand-up Comedy</Title>
           {comedyShows.map((comedyShow) => {
             return (
               <EventItem

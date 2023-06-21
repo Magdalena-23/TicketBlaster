@@ -15,7 +15,7 @@ const MusicalConcerts = () => {
     const fetchConcerts = async () => {
       try {
         const response = await axios.get(
-          `/api/events?type=Concert&limit=${displayCount}`
+          `/api/events/type?type=Concert&limit=${displayCount}`
         );
         const fetchedConcerts = response.data;
         setConcerts(fetchedConcerts);

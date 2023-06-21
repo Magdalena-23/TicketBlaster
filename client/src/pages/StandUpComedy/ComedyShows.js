@@ -15,7 +15,7 @@ const ComedyShows = () => {
     const fetchComedyShows = async () => {
       try {
         const response = await axios.get(
-          `/api/events?type=Comedy&limit=${displayCount}`
+          `/api/events/type?type=Comedy&limit=${displayCount}`
         );
         const fetchedComedyShows = response.data;
         setComedyShows(fetchedComedyShows);
