@@ -5,9 +5,11 @@ import Button from "../common/Button/Button";
 
 function EventItem(props) {
   const navigate = useNavigate();
+
   const handleClick = () => {
     navigate(`/event-details/${props.id}`);
   };
+
   return (
     <div className={`${classes["event-item"]} ${props.className}`}>
       <div className={classes["img-container"]}>
@@ -15,12 +17,19 @@ function EventItem(props) {
       </div>
       <div className={classes.desc}>
         <h2>{props.artist}</h2>
-        <span className={classes.date}>{props.date}</span>
+        {!props.datePlacementAfterDesc && (
+          <span className={classes.date}>{props.date}</span>
+        )}
         <p>{props.description}</p>
-        <div>
-          <span>
-            {props.city}, {props.country}
-          </span>
+        <div className={classes["flex-space-between"]}>
+          <div className={classes["flex-column"]}>
+            {props.datePlacementAfterDesc && (
+              <span className={classes.date}>{props.date}</span>
+            )}
+            <span>
+              {props.city}, {props.country}
+            </span>
+          </div>
           <Button className={classes.btn} onClick={handleClick}>
             {props.text}
           </Button>

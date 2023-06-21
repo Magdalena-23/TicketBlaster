@@ -35,10 +35,16 @@
   margin: 0;
 }
 
-.desc div {
+.flex-space-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
 }
 
 .desc span {

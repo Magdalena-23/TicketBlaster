@@ -7,6 +7,9 @@ import Title from "../../components/common/Title/Title";
 import { formatTime } from "../../helpers/timeFormat";
 
 const SearchResults = () => {
+  // const [datePlacementAfterDesc, setDatePlacementAfterDesc] = useState(true);
+  const datePlacementAfterDesc = true;
+
   const [searchResults, setSearchResults] = useState([]);
   const location = useLocation();
   const searchQuery = new URLSearchParams(location.search).get("search");
@@ -39,6 +42,7 @@ const SearchResults = () => {
               country={searchItem.country}
               description={searchItem.description}
               img={searchItem.img}
+              datePlacementAfterDesc={datePlacementAfterDesc}
               text="Get tickets"
             />
           );
