@@ -5,6 +5,7 @@ import FormWrapper from "../../common/FormWrapper";
 import Input from "../../common/Input";
 import Button from "../../common/Button/Button";
 import axios from "../../../api/axios";
+import Title from "../../common/Title/Title";
 
 const FORGOT_PASSWORD_URL = "api/auth/forgot-password";
 
@@ -51,7 +52,7 @@ function ForgotPassword() {
   };
   return (
     <FormWrapper onSubmit={handleSubmit}>
-      <h1>Forgot Password</h1>
+      <Title>Forgot Password</Title>
       {errorMsg && <span className={classes.error}>{errorMsg}</span>}
       {msg && <span className={classes.msg}>{msg}</span>}
       <div className={classes.spacing}>

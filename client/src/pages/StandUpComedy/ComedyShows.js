@@ -4,6 +4,7 @@ import Button from "../../components/common/Button/Button";
 import classes from "../MusicalConcerts/MusicalConcerts.module.css";
 import { formatTime } from "../../helpers/timeFormat";
 import axios from "../../api/axios";
+import Title from "../../components/common/Title/Title";
 
 const ComedyShows = () => {
   const [comedyShows, setComedyShows] = useState([]);
@@ -33,7 +34,7 @@ const ComedyShows = () => {
 
   return (
     <div>
-      <h1>Stand-up Comedy</h1>
+      <Title>Stand-up Comedy</Title>
       <div className={classes.grid}>
         {comedyShows.map((comedyShow) => {
           return (

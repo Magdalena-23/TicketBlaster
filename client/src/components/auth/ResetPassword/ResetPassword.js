@@ -5,6 +5,7 @@ import FormWrapper from "../../common/FormWrapper";
 import Input from "../../common/Input";
 import Button from "../../common/Button/Button";
 import axios from "../../../api/axios";
+import Title from "../../common/Title/Title";
 
 const RESET_URL = "/api/auth/reset-password";
 
@@ -74,7 +75,7 @@ function ResetPassword() {
   };
   return (
     <FormWrapper onSubmit={handleSubmit}>
-      <h1>Reset Password</h1>
+      <Title>Reset Password</Title>
       {errorMsg && <span className={classes.error}>{errorMsg}</span>}
       <Input
         type="password"

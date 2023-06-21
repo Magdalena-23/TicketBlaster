@@ -6,6 +6,7 @@ import Button from "../../common/Button/Button";
 import axios from "../../../api/axios";
 import { useState } from "react";
 import { useAuth } from "../../../context/AuthContext";
+import Title from "../../common/Title/Title";
 
 const LOGIN_URL = "api/auth/login";
 
@@ -77,7 +78,7 @@ const Login = () => {
 
   return (
     <FormWrapper onSubmit={handleSubmit}>
-      <h1>Log In</h1>
+      <Title>Log In</Title>
       {errorMsg && <span className={classes.error}>{errorMsg}</span>}
       <Input
         type="email"

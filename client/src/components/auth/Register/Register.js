@@ -6,6 +6,7 @@ import FormWrapper from "../../common/FormWrapper";
 import Input from "../../common/Input";
 import classes from "./Register.module.css";
 import Button from "../../common/Button/Button";
+import Title from "../../common/Title/Title";
 const REGISTER_URL = "/api/auth/register";
 
 function Register() {
@@ -108,7 +109,7 @@ function Register() {
   };
   return (
     <FormWrapper onSubmit={handleSubmit}>
-      <h1>Create Account</h1>
+      <Title>Create Account</Title>
       {errorMsg && <span className={classes.error}>{errorMsg}</span>}
       <Input
         type="text"

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import classes from "./LoggedInNav.module.css";
 import { useAuth } from "../../../context/AuthContext";
+import Title from "../../common/Title/Title";
 
 function LoggedInNav() {
   const { logout } = useAuth();
@@ -12,6 +13,7 @@ function LoggedInNav() {
   };
 
   const location = useLocation();
+
   const showSecondNavBar =
     location.pathname === "/tickets-history" ||
     location.pathname === "/user-details";
@@ -22,10 +24,10 @@ function LoggedInNav() {
 
   return (
     <div className={classes.container}>
-      <h1>{pageTitle}</h1>
+      <Title>{pageTitle}</Title>
       <div className={classes["profile-nav"]}>
         <NavLink
-          to="tickets-history"
+          to="/tickets-history"
           className={({ isActive }) =>
             isActive ? classes["active"] : undefined
           }
