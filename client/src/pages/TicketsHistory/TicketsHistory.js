@@ -3,12 +3,12 @@ import classes from "./TicketsHistory.module.css";
 import EventItem from "../../components/events/EventItem";
 import { concertsData } from "../../dummyData";
 import { formatTime } from "../../helpers/timeFormat";
-import Title from "../../components/common/Title/Title";
+// import Title from "../../components/common/Title/Title";
 
 function TicketsHistory() {
   return (
     <>
-      <Title>Tickets History</Title>
+      {/* <Title>Tickets History</Title> */}
       <div className={classes.grid}>
         {concertsData.map((concert) => {
           return (

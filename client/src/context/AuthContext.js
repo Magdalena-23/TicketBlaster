@@ -9,13 +9,13 @@ const AuthContextProvider = (props) => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      setTimeout(() => {
-        setUser({ token });
-        setIsLoading(false);
-      }, 500);
-    } else {
+      // setTimeout(() => {
+      setUser({ token });
       setIsLoading(false);
-    }
+    } //500);
+    // } else {
+    //   setIsLoading(false);
+    // }
   }, []);
 
   const login = (token) => {

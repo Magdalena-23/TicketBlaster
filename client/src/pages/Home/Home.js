@@ -40,7 +40,6 @@ function Home() {
           "/api/events/type?type=Concert&limit=5"
         );
         const concerts = response.data;
-        console.log(concerts);
         setConcerts(concerts);
       } catch (error) {
         console.error("Error fetching concerts:", error);
@@ -57,7 +56,6 @@ function Home() {
           "/api/events/type?type=Comedy&limit=5"
         );
         const comedyShows = response.data;
-        console.log(comedyShows);
         setComedyShows(comedyShows);
       } catch (error) {
         console.error("Error fetching comedy shows:", error);

@@ -39,12 +39,12 @@ const App = () => {
               <Route path="/comedy-shows" element={<ComedyShows />} />
               <Route path="/search-results" element={<SearchResults />} />
               <Route path="/event-details/:id" element={<EventDetails />} />
-              <Route element={<PrivateRoute />}>
-                <Route path="/tickets-history" element={<TicketsHistory />} />
-              </Route>
-              <Route element={<PrivateRoute />}>
-                <Route path="/user-details" element={<UserDetails />} />
-              </Route>
+              {/* <Route element={<PrivateRoute />}> */}
+              <Route path="/tickets-history" element={<TicketsHistory />} />
+              {/* </Route> */}
+              {/* <Route element={<PrivateRoute />}> */}
+              <Route path="/user-details" element={<UserDetails />} />
+              {/* </Route> */}
             </Routes>
           </LayoutComponent>
         </div>

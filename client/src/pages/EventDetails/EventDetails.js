@@ -4,6 +4,7 @@ import EventItem from "../../components/events/EventItem";
 import Button from "../../components/common/Button/Button";
 import axios from "../../api/axios";
 import { formatTime } from "../../helpers/timeFormat";
+import Title from "../../components/common/Title/Title";
 
 const EventDetails = () => {
   const [event, setEvent] = useState({});
@@ -13,7 +14,6 @@ const EventDetails = () => {
     const getEvent = async () => {
       const response = await axios.get(`/api/events/find/${eventId}`);
       const event = response.data;
-      console.log(event);
       setEvent(event);
     };
     getEvent();
@@ -21,7 +21,7 @@ const EventDetails = () => {
   return (
     <>
       <div className={classes.title}>
-        <h1>{event.artist}</h1>
+        <Title>{event.artist}</Title>
         <span className={classes.date}>{formatTime(event.date)}</span>
         <span>
           {event.city}, {event.country}
