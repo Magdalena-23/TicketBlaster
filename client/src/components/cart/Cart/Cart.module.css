@@ -1,0 +1,19 @@
+.btn-container {
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  font: inherit;
+  width: 230px;
+  font-size: 16px;
+  padding: 9px 28px;
+  background-color: #000000;
+  color: #ffffff;
+  border: none;
+}
+
+.btn-pink {
+  background-color: #ff48ab;
+}
