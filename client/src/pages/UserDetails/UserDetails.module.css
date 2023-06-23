@@ -80,6 +80,15 @@
 
 .password-input {
   width: 250px;
+  /* flex: 1; */
+}
+
+.password-input-invalid {
+  width: 250px;
+  font-size: 15px;
+  color: red;
+  position: absolute;
+  bottom: -17px;
 }
 
 .submit-btn {

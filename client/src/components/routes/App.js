@@ -13,9 +13,10 @@ import LayoutComponent from "../layout/LayoutComponent/LayoutComponent";
 import TicketsHistory from "../../pages/TicketsHistory/TicketsHistory";
 import UserDetails from "../../pages/UserDetails/UserDetails";
 import LoggedInNav from "../layout/LoggedInNav/LoggedInNav";
-import PrivateRoute from "./PrivateRoute";
+// import PrivateRoute from "./PrivateRoute";
 import EventDetails from "../../pages/EventDetails/EventDetails";
 import SearchResults from "../../pages/SearchResults/SearchResults";
+import Cart from "../cart/Cart/Cart";
 
 const App = () => {
   console.log("app");
@@ -39,6 +40,7 @@ const App = () => {
               <Route path="/comedy-shows" element={<ComedyShows />} />
               <Route path="/search-results" element={<SearchResults />} />
               <Route path="/event-details/:id" element={<EventDetails />} />
+              <Route path="/cart" element={<Cart />} />
               {/* <Route element={<PrivateRoute />}> */}
               <Route path="/tickets-history" element={<TicketsHistory />} />
               {/* </Route> */}
