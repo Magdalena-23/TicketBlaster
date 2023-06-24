@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { useState } from "react";
 
 import Header from "../layout/Header/Header";
 import Login from "../auth/Login/Login";
@@ -19,7 +20,15 @@ import SearchResults from "../../pages/SearchResults/SearchResults";
 import Cart from "../cart/Cart/Cart";
 
 const App = () => {
-  console.log("app");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   return (
     <BrowserRouter>
       <div className="App">
@@ -42,7 +51,16 @@ const App = () => {
               <Route path="/event-details/:id" element={<EventDetails />} />
               <Route path="/cart" element={<Cart />} />
               {/* <Route element={<PrivateRoute />}> */}
-              <Route path="/tickets-history" element={<TicketsHistory />} />
+              <Route
+                path="/tickets-history"
+                element={
+                  <TicketsHistory
+                    onClose={closeModal}
+                    openModal={openModal}
+                    isModalOpen={isModalOpen}
+                  />
+                }
+              />
               {/* </Route> */}
               {/* <Route element={<PrivateRoute />}> */}
               <Route path="/user-details" element={<UserDetails />} />

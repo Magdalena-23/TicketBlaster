@@ -7,6 +7,10 @@ function EventItem(props) {
   const navigate = useNavigate();
 
   const handleClick = () => {
+    if (props.text === "Print") {
+      props.openModal();
+      return;
+    }
     navigate(`/event-details/${props.id}`);
   };
 
