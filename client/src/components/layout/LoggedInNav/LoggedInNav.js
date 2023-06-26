@@ -1,37 +1,45 @@
-import React, { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import React from "react";
+import { NavLink } from "react-router-dom";
 import classes from "./LoggedInNav.module.css";
 import { useAuth } from "../../../context/AuthContext";
 import Title from "../../common/Title/Title";
+import { decodeAdmin } from "../../../helpers/jwtDecode";
 
-function LoggedInNav() {
+function LoggedInNav(props) {
   const { logout } = useAuth();
-  const [pageTitle, setPageTitle] = useState("Tickets History");
-
-  const updatePageTitle = (text) => {
-    setPageTitle(text);
-  };
-
-  const location = useLocation();
-
-  const showSecondNavBar =
-    location.pathname === "/tickets-history" ||
-    location.pathname === "/user-details";
-
-  if (!showSecondNavBar) {
-    return null;
-  }
+  const admin = decodeAdmin();
 
   return (
     <div className={classes.container}>
-      <Title>{pageTitle}</Title>
+      <Title>{props.header}</Title>
       <div className={classes["profile-nav"]}>
+        {admin && (
+          <NavLink
+            to="/events"
+            className={({ isActive }) =>
+              isActive ? classes["active"] : undefined
+            }
+            end
+          >
+            Events
+          </NavLink>
+        )}
+        {admin && (
+          <NavLink
+            to="/users"
+            className={({ isActive }) =>
+              isActive ? classes["active"] : undefined
+            }
+            end
+          >
+            Users
+          </NavLink>
+        )}
         <NavLink
           to="/tickets-history"
           className={({ isActive }) =>
             isActive ? classes["active"] : undefined
           }
-          onClick={() => updatePageTitle("Tickets History")}
           end
         >
           Tickets History
@@ -41,7 +49,6 @@ function LoggedInNav() {
           className={({ isActive }) =>
             isActive ? classes["active"] : undefined
           }
-          onClick={() => updatePageTitle("User Details")}
           end
         >
           User Details

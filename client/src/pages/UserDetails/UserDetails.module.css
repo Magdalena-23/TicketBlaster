@@ -20,12 +20,14 @@
 .img-container {
   width: 96px;
   height: 96px;
+  border-radius: 50%;
+  overflow: hidden;
 }
 
 .img-container img {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
+  object-fit: cover;
 }
 
 .upload-wrapper {
@@ -80,7 +82,6 @@
 
 .password-input {
   width: 250px;
-  /* flex: 1; */
 }
 
 .password-input-invalid {

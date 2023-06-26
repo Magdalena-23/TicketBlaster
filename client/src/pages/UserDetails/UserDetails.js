@@ -2,12 +2,13 @@ import React, { useEffect, useState } from "react";
 import classes from "./UserDetails.module.css";
 import Input from "../../components/common/Input";
 import Button from "../../components/common/Button/Button";
+import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";
 import axios from "../../api/axios";
 import { decodeJwt } from "../../helpers/jwtDecode";
 
 const UserDetails = () => {
   const [shouldShow, setShouldShow] = useState(false);
-  const [user, setUser] = useState({});
+  const [img, setImg] = useState("");
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
@@ -23,17 +24,17 @@ const UserDetails = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const user = await axios.get(`/api/users/${userId}`);
-        setUser(user.data);
+        const user = await axios.get(`/api/users/${userId}`, {
+          headers: { "auth-token": token },
+        });
         setEmail(user.data.email);
         setFullName(user.data.fullName);
-        console.log(user.data);
       } catch (err) {
         console.log(err);
       }
     };
     getUser();
-  }, [userId]);
+  }, [userId, token]);
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -56,35 +57,61 @@ const UserDetails = () => {
     setConfirmPasswordError("");
     setPasswordError("");
   };
-  const handleSubmit = async (e) => {
+
+  const convertToBase64 = (e) => {
+    console.log(e);
+    var reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = () => {
+      console.log(reader.result);
+      setImg(reader.result);
+    };
+    reader.onerror = (error) => {
+      console.log("Error: ", error);
+    };
+  };
+
+  const handleImageUpload = async (e) => {
     e.preventDefault();
 
-    if (!email) {
-      setEmailError("Email is required");
-      return;
-    } else if (password.trim().length < 6) {
-      setPasswordError("Password too short");
-      return;
-    } else if (!confirmPassword) {
-      setConfirmPasswordError("Confirm Password is required");
-      return;
-    } else if (confirmPassword !== password) {
-      setConfirmPasswordError("Passwords do not match");
+    if (!img) {
       return;
     }
 
     try {
       const response = await axios.put(
         `/api/users/${userId}`,
-        { password },
+        { img },
         { headers: { "auth-token": token } }
       );
-      console.log("User data updated:", response.data);
-      // Handle success or display a success message
+      console.log("User image uploaded:", response.data);
     } catch (error) {
-      console.error("Error updating user data:", error);
+      console.error("Error uploading user image:", error);
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   if (!fullName) {
+  //     setFullNameError("Name is required");
+  //     return;
+  //   } else if (!email) {
+  //     setEmailError("Email is required");
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await axios.put(
+  //       `/api/users/${userId}`,
+  //       { img, email, fullName },
+  //       { headers: { "auth-token": token } }
+  //     );
+  //     console.log("User data updated:", response.data);
+  //   } catch (error) {
+  //     console.error("Error updating user data:", error);
+  //   }
+  // };
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
@@ -109,6 +136,8 @@ const UserDetails = () => {
         { password },
         { headers: { "auth-token": token } }
       );
+      setPassword("");
+      setConfirmPassword("");
       console.log("User data updated:", response.data);
       // Handle success or display a success message
     } catch (error) {
@@ -117,94 +146,106 @@ const UserDetails = () => {
   };
 
   return (
-    <div className={classes.container}>
-      <div>
-        <div className={classes["section"]}>
-          <div className={`${classes["flex-column"]} ${classes.avatar}`}>
-            <div className={classes["img-container"]}>
-              <img
-                src="https://newprofilepic2.photo-cdn.net//assets/images/article/profile.jpg"
-                alt="profile-avatar"
-              />
+    <>
+      <LoggedInNav header="User Details" />
+      <div className={classes.container}>
+        <div>
+          <div className={classes["section"]}>
+            <div className={`${classes["flex-column"]} ${classes.avatar}`}>
+              <div className={classes["img-container"]}>
+                <img
+                  src={
+                    img
+                      ? img
+                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoS1h0huK1B606Qb4j_hHmwGH8wPmvKLSKQ&usqp=CAU"
+                  }
+                  alt="profile-avatar"
+                />
+              </div>
+              <div className={classes["upload-wrapper"]}>
+                <label
+                  htmlFor="avatar-upload"
+                  className={classes["upload-button"]}
+                >
+                  Upload Avatar
+                </label>
+                <input
+                  type="file"
+                  id="avatar-upload"
+                  name="avatar-upload"
+                  accept="image/*"
+                  onChange={convertToBase64}
+                />
+              </div>
             </div>
-            <div className={classes["upload-wrapper"]}>
-              <label
-                htmlFor="avatar-upload"
-                className={classes["upload-button"]}
-              >
-                Upload Avatar
-              </label>
-              <input
-                type="file"
-                id="avatar-upload"
-                name="avatar-upload"
-                accept="image/*"
+            <div className={classes["flex-column"]}>
+              <Input
+                style={classes.style}
+                className={classes["name-email-inputs"]}
+                type="text"
+                label="Full Name"
+                onChange={handleFullNameChange}
+                value={fullName}
+                error={fullNameError}
+              />
+              <Input
+                style={classes.style}
+                className={classes["name-email-inputs"]}
+                type="email"
+                label="Email"
+                onChange={handleEmailChange}
+                value={email}
+                error={emailError}
               />
             </div>
           </div>
-          <div className={classes["flex-column"]}>
-            <Input
-              style={classes.style}
-              className={classes["name-email-inputs"]}
-              type="text"
-              label="Full Name"
-              onChange={handleFullNameChange}
-              value={fullName}
-            />
-            <Input
-              style={classes.style}
-              className={classes["name-email-inputs"]}
-              type="email"
-              label="Email"
-              onChange={handleEmailChange}
-              value={email}
-            />
-          </div>
-        </div>
-        <Button className={classes["submit-btn"]}>Submit</Button>
-      </div>
-      <div>
-        <div className={classes.flex}>
-          <h2>Password</h2>
-          <Button
-            className={classes.btn}
-            onClick={() => setShouldShow((prevValue) => !prevValue)}
-          >
-            Change Password
+          <Button className={classes["submit-btn"]} onClick={handleImageUpload}>
+            Submit
           </Button>
         </div>
-        {shouldShow && (
-          <div className={classes["change-password-inputs"]}>
-            <div className={classes.flex}>
-              <Input
-                style={classes.style}
-                className={`${classes["password-input"]}`}
-                type="password"
-                label="Password"
-                onChange={handlePasswordChange}
-                value={password}
-                error={passwordError}
-              />
-              <Input
-                style={classes.style}
-                className={classes["password-input"]}
-                type="password"
-                label="Re-type Password"
-                onChange={handleConfirmPasswordChange}
-                value={confirmPassword}
-                error={confirmPasswordError}
-              />
-            </div>
+        <div>
+          <div className={classes.flex}>
+            <h2>Password</h2>
             <Button
-              className={classes["submit-btn"]}
-              onClick={handlePasswordSubmit}
+              className={classes.btn}
+              onClick={() => setShouldShow((prevValue) => !prevValue)}
             >
-              Submit
+              Change Password
             </Button>
           </div>
-        )}
+          {shouldShow && (
+            <div className={classes["change-password-inputs"]}>
+              <div className={classes.flex}>
+                <Input
+                  style={classes.style}
+                  className={`${classes["password-input"]}`}
+                  type="password"
+                  label="Password"
+                  onChange={handlePasswordChange}
+                  value={password}
+                  error={passwordError}
+                />
+                <Input
+                  style={classes.style}
+                  className={classes["password-input"]}
+                  type="password"
+                  label="Re-type Password"
+                  onChange={handleConfirmPasswordChange}
+                  value={confirmPassword}
+                  error={confirmPasswordError}
+                />
+              </div>
+              <Button
+                className={classes["submit-btn"]}
+                onClick={handlePasswordSubmit}
+              >
+                Submit
+              </Button>
+            </div>
+          )}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

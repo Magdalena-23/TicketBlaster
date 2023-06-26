@@ -11,3 +11,15 @@ export const decodeJwt = () => {
   }
   return null;
 };
+
+export const decodeAdmin = () => {
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    const decodedToken = jwtDecode(token);
+
+    const admin = decodedToken.isAdmin;
+    return admin;
+  }
+  return null;
+};

@@ -13,7 +13,6 @@ import Home from "../../pages/Home/Home";
 import LayoutComponent from "../layout/LayoutComponent/LayoutComponent";
 import TicketsHistory from "../../pages/TicketsHistory/TicketsHistory";
 import UserDetails from "../../pages/UserDetails/UserDetails";
-import LoggedInNav from "../layout/LoggedInNav/LoggedInNav";
 // import PrivateRoute from "./PrivateRoute";
 import EventDetails from "../../pages/EventDetails/EventDetails";
 import SearchResults from "../../pages/SearchResults/SearchResults";
@@ -35,7 +34,6 @@ const App = () => {
         <Header />
         <div className="wrapper">
           <LayoutComponent>
-            <LoggedInNav />
             <Routes>
               <Route exact path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />

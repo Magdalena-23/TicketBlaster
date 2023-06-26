@@ -4,12 +4,12 @@ import EventItem from "../../components/events/EventItem";
 import { concertsData } from "../../dummyData";
 import { formatTime } from "../../helpers/timeFormat";
 import Modal from "../../components/common/Modal/Modal";
-// import Title from "../../components/common/Title/Title";
+import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";
 
 function TicketsHistory(props) {
   return (
     <>
-      {/* <Title>Tickets History</Title> */}
+      <LoggedInNav header="Tickets History" />
       {props.isModalOpen && (
         <Modal onClose={props.onClose}>
           <div className={classes.modal}>
