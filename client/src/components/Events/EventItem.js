@@ -8,6 +8,7 @@ function EventItem(props) {
 
   const handleClick = () => {
     if (props.text === "Print") {
+      props.onPrint(props.event);
       props.openModal();
       return;
     }

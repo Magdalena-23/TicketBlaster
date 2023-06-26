@@ -1,12 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import classes from "./TicketsHistory.module.css";
 import EventItem from "../../components/events/EventItem";
-import { concertsData } from "../../dummyData";
 import { formatTime } from "../../helpers/timeFormat";
 import Modal from "../../components/common/Modal/Modal";
 import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";
+import { decodeJwt } from "../../helpers/jwtDecode";
+import axios from "../../api/axios";
 
 function TicketsHistory(props) {
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [eventsId, setEventsId] = useState([]);
+  const [ticketsHistory, setTicketsHistory] = useState([]);
+
+  const handlePrint = (event) => {
+    setSelectedEvent(event);
+  };
+
+  const userId = decodeJwt();
+  useEffect(() => {
+    const getEventsId = async () => {
+      try {
+        const eventsId = await axios.get(`/api/users/tickets/${userId}`);
+        setEventsId(eventsId.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getEventsId();
+  }, [userId]);
+
+  useEffect(() => {
+    const getTicketsHistory = async () => {
+      try {
+        const eventsData = [];
+        for (const eventId of eventsId) {
+          const response = await axios.get(`/api/events/find/${eventId}`);
+          eventsData.push(response.data);
+        }
+        eventsData.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+        setTicketsHistory(eventsData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    if (eventsId.length > 0) {
+      getTicketsHistory();
+    }
+  }, [eventsId]);
   return (
     <>
       <LoggedInNav header="Tickets History" />
@@ -34,9 +76,13 @@ function TicketsHistory(props) {
             </div>
             <div className={classes["modal-info"]}>
               <div className={classes.left}>
-                <h1>Incubus</h1>
-                <span className={classes.date}>June 9th, 2023</span>
-                <span className={classes.location}>Zagreb, Croatia</span>
+                <h1>{selectedEvent.artist}</h1>
+                <span className={classes.date}>
+                  {formatTime(selectedEvent.date)}
+                </span>
+                <span className={classes.location}>
+                  {selectedEvent.city}, {selectedEvent.country}
+                </span>
               </div>
               <div className={classes.right}>
                 <img
@@ -50,18 +96,24 @@ function TicketsHistory(props) {
         </Modal>
       )}
       <div className={classes.grid}>
-        {concertsData.map((concert) => {
+        {ticketsHistory.map((event) => {
           return (
             <EventItem
-              // className={classes.disabled}
-              key={concert.id}
-              artist={concert.artist}
-              date={formatTime(concert.date)}
-              location={concert.location}
-              description={concert.description}
-              img={concert.img}
+              className={
+                new Date() > new Date(event.date) ? classes.disabled : ""
+              }
+              key={event._id}
+              id={event._id}
+              artist={event.artist}
+              date={formatTime(event.date)}
+              country={event.country}
+              city={event.city}
+              description={event.description}
+              img={event.img}
               openModal={props.openModal}
               text="Print"
+              onPrint={handlePrint}
+              event={event}
             />
           );
         })}

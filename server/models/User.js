@@ -21,6 +21,13 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  cart: [{ type: mongoose.Schema.Types.ObjectId, ref: "Event" }],
+  purchasedTickets: [
+    {
+      eventId: { type: mongoose.Schema.Types.ObjectId, ref: "Event" },
+      quantity: Number,
+    },
+  ],
 });
 
 const User = new mongoose.model("User", userSchema);
