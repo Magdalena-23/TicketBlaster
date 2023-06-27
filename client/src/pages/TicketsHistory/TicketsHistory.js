@@ -37,7 +37,6 @@ function TicketsHistory(props) {
           const response = await axios.get(`/api/events/find/${eventId}`);
           eventsData.push(response.data);
         }
-        eventsData.sort((a, b) => new Date(b.date) - new Date(a.date));
 
         setTicketsHistory(eventsData);
       } catch (err) {
@@ -96,27 +95,29 @@ function TicketsHistory(props) {
         </Modal>
       )}
       <div className={classes.grid}>
-        {ticketsHistory.map((event) => {
-          return (
-            <EventItem
-              className={
-                new Date() > new Date(event.date) ? classes.disabled : ""
-              }
-              key={event._id}
-              id={event._id}
-              artist={event.artist}
-              date={formatTime(event.date)}
-              country={event.country}
-              city={event.city}
-              description={event.description}
-              img={event.img}
-              openModal={props.openModal}
-              text="Print"
-              onPrint={handlePrint}
-              event={event}
-            />
-          );
-        })}
+        {ticketsHistory
+          .sort((a, b) => new Date(b.date) - new Date(a.date))
+          .map((event) => {
+            return (
+              <EventItem
+                className={
+                  new Date() > new Date(event.date) ? classes.disabled : ""
+                }
+                key={event._id}
+                id={event._id}
+                artist={event.artist}
+                date={formatTime(event.date)}
+                country={event.country}
+                city={event.city}
+                description={event.description}
+                img={event.img}
+                openModal={props.openModal}
+                text="Print"
+                onPrint={handlePrint}
+                event={event}
+              />
+            );
+          })}
       </div>
     </>
   );
