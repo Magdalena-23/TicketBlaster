@@ -13,6 +13,7 @@ import Home from "../../pages/Home/Home";
 import LayoutComponent from "../layout/LayoutComponent/LayoutComponent";
 import TicketsHistory from "../../pages/TicketsHistory/TicketsHistory";
 import UserDetails from "../../pages/UserDetails/UserDetails";
+import Users from "../../pages/Users/Users";
 // import PrivateRoute from "./PrivateRoute";
 import EventDetails from "../../pages/EventDetails/EventDetails";
 import SearchResults from "../../pages/SearchResults/SearchResults";
@@ -48,6 +49,7 @@ const App = () => {
               <Route path="/search-results" element={<SearchResults />} />
               <Route path="/event-details/:id" element={<EventDetails />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/users" element={<Users />} />
               {/* <Route element={<PrivateRoute />}> */}
               <Route
                 path="/tickets-history"
