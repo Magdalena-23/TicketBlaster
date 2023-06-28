@@ -22,10 +22,14 @@ const User = (props) => {
           className={`${classes.btn} ${
             props.isAdmin ? classes["admin-btn"] : classes["user-btn"]
           }`}
+          onClick={() => props.handleRoleChange(props.id, props.isAdmin)}
         >
           {props.isAdmin ? "Make User" : "Make Admin"}
         </Button>
-        <Button className={`${classes["delete-btn"]} ${classes.btn}`}>
+        <Button
+          className={`${classes["delete-btn"]} ${classes.btn}`}
+          onClick={() => props.handleDelete(props.id)}
+        >
           Delete User
         </Button>
       </div>

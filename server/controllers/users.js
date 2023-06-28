@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({ isDeleted: false });
     res.status(200).send(users);
   } catch (err) {
     console.log(err);
@@ -39,10 +39,32 @@ const updateUser = async (req, res) => {
   }
 };
 
-const deleteUser = async (req, res) => {
+const softDeleteUser = async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.params.id);
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    user.isDeleted = req.body.isDeleted;
+    await user.save();
     res.status(200).send("User deleted");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
+  }
+};
+
+const changeUserRole = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    user.isAdmin = req.body.isAdmin;
+    await user.save();
+    res.status(200).send("User role changed");
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");
@@ -74,6 +96,7 @@ module.exports = {
   getAllUsers,
   getUser,
   updateUser,
-  deleteUser,
+  softDeleteUser,
   getPurchasedEvents,
+  changeUserRole,
 };

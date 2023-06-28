@@ -125,7 +125,6 @@ const resetPassword = async (req, res) => {
     }
     // Extract the reset token and new password
     const { newPassword, token } = req.body;
-    console.log(token);
 
     // Verify the token
     jwt.verify(token, process.env.RESET_PASSWORD_KEY, (error, decoded) => {
