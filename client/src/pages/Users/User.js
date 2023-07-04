@@ -8,7 +8,11 @@ const User = (props) => {
       <div className={classes["user-details"]}>
         <div className={classes["img-container"]}>
           <img
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoS1h0huK1B606Qb4j_hHmwGH8wPmvKLSKQ&usqp=CAU"
+            src={
+              props.img
+                ? props.img
+                : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRCoS1h0huK1B606Qb4j_hHmwGH8wPmvKLSKQ&usqp=CAU"
+            }
             alt="profile-avatar"
           />
         </div>

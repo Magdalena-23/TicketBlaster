@@ -111,6 +111,7 @@ const Users = () => {
         <User
           id={user._id}
           key={user._id}
+          img={user.img}
           fullName={user.fullName}
           email={user.email}
           isAdmin={user.isAdmin}

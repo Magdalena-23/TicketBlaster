@@ -29,6 +29,7 @@ const UserDetails = () => {
         });
         setEmail(user.data.email);
         setFullName(user.data.fullName);
+        setImg(user.data.img);
       } catch (err) {
         console.log(err);
       }
@@ -71,47 +72,47 @@ const UserDetails = () => {
     };
   };
 
-  const handleImageUpload = async (e) => {
-    e.preventDefault();
-
-    if (!img) {
-      return;
-    }
-
-    try {
-      const response = await axios.put(
-        `/api/users/${userId}`,
-        { img },
-        { headers: { "auth-token": token } }
-      );
-      console.log("User image uploaded:", response.data);
-    } catch (error) {
-      console.error("Error uploading user image:", error);
-    }
-  };
-
-  // const handleSubmit = async (e) => {
+  // const handleImageUpload = async (e) => {
   //   e.preventDefault();
 
-  //   if (!fullName) {
-  //     setFullNameError("Name is required");
-  //     return;
-  //   } else if (!email) {
-  //     setEmailError("Email is required");
+  //   if (!img) {
   //     return;
   //   }
 
   //   try {
   //     const response = await axios.put(
   //       `/api/users/${userId}`,
-  //       { img, email, fullName },
+  //       { img },
   //       { headers: { "auth-token": token } }
   //     );
-  //     console.log("User data updated:", response.data);
+  //     console.log("User image uploaded:", response.data);
   //   } catch (error) {
-  //     console.error("Error updating user data:", error);
+  //     console.error("Error uploading user image:", error);
   //   }
   // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!fullName) {
+      setFullNameError("Name is required");
+      return;
+    } else if (!email) {
+      setEmailError("Email is required");
+      return;
+    }
+
+    try {
+      const response = await axios.put(
+        `/api/users/${userId}`,
+        { img, email, fullName },
+        { headers: { "auth-token": token } }
+      );
+      console.log("User data updated:", response.data);
+    } catch (error) {
+      console.error("Error updating user data:", error);
+    }
+  };
 
   const handlePasswordSubmit = async (e) => {
     e.preventDefault();
@@ -139,7 +140,6 @@ const UserDetails = () => {
       setPassword("");
       setConfirmPassword("");
       console.log("User data updated:", response.data);
-      // Handle success or display a success message
     } catch (error) {
       console.error("Error updating user data:", error);
     }
@@ -199,7 +199,7 @@ const UserDetails = () => {
               />
             </div>
           </div>
-          <Button className={classes["submit-btn"]} onClick={handleImageUpload}>
+          <Button className={classes["submit-btn"]} onClick={handleSubmit}>
             Submit
           </Button>
         </div>
