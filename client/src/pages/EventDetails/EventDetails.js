@@ -42,7 +42,7 @@ const EventDetails = () => {
           <div className={classes.tickets}>
             <div className={classes.flex}>
               <h2>Tickets</h2>
-              <h2 className={classes.price}>$60.00 USD</h2>
+              <h2 className={classes.price}>${event.price.toFixed(2)} USD</h2>
             </div>
             <div className={classes.flex}>
               <input
