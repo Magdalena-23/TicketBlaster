@@ -9,7 +9,6 @@ import axios from "../../api/axios";
 
 function TicketsHistory(props) {
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [eventsId, setEventsId] = useState([]);
   const [ticketsHistory, setTicketsHistory] = useState([]);
 
   const handlePrint = (event) => {
@@ -17,37 +16,24 @@ function TicketsHistory(props) {
   };
 
   const userId = decodeJwt();
-  useEffect(() => {
-    const getEventsId = async () => {
-      try {
-        const eventsId = await axios.get(`/api/users/tickets/${userId}`);
-        setEventsId(eventsId.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getEventsId();
-  }, [userId]);
 
   useEffect(() => {
     const getTicketsHistory = async () => {
       try {
-        const eventsData = [];
-        for (const eventId of eventsId) {
-          const response = await axios.get(`/api/events/find/${eventId}`);
-          eventsData.push(response.data);
-        }
+        const response = await axios.get(`/api/tickets/${userId}/${true}`);
 
-        setTicketsHistory(eventsData);
+        const sortedTickets = response.data.sort((a, b) => {
+          return new Date(b.event.date) - new Date(a.event.date);
+        });
+
+        setTicketsHistory(sortedTickets);
       } catch (err) {
         console.log(err);
       }
     };
 
-    if (eventsId.length > 0) {
-      getTicketsHistory();
-    }
-  }, [eventsId]);
+    getTicketsHistory();
+  }, [userId]);
   return (
     <>
       <LoggedInNav header="Tickets History" />
@@ -95,29 +81,33 @@ function TicketsHistory(props) {
         </Modal>
       )}
       <div className={classes.grid}>
-        {ticketsHistory
-          .sort((a, b) => new Date(b.date) - new Date(a.date))
-          .map((event) => {
+        {ticketsHistory.length === 0 ? (
+          <span className={classes["no-items-found"]}>No tickets found</span>
+        ) : (
+          ticketsHistory.map((event) => {
             return (
               <EventItem
                 className={
-                  new Date() > new Date(event.date) ? classes.disabled : ""
+                  new Date() > new Date(event.event.date)
+                    ? classes.disabled
+                    : ""
                 }
-                key={event._id}
-                id={event._id}
-                artist={event.artist}
-                date={formatTime(event.date)}
-                country={event.country}
-                city={event.city}
-                description={event.description}
-                img={event.img}
+                key={event.event._id}
+                id={event.event._id}
+                artist={event.event.artist}
+                date={formatTime(event.event.date)}
+                country={event.event.country}
+                city={event.event.city}
+                description={event.event.description}
+                img={event.event.img}
                 openModal={props.openModal}
                 text="Print"
                 onPrint={handlePrint}
-                event={event}
+                event={event.event}
               />
             );
-          })}
+          })
+        )}
       </div>
     </>
   );

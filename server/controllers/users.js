@@ -71,32 +71,10 @@ const changeUserRole = async (req, res) => {
   }
 };
 
-const getPurchasedEvents = async (req, res) => {
-  try {
-    const userId = req.params.id; // User ID for which to retrieve purchased events
-
-    const user = await User.findById(userId);
-
-    if (!user) {
-      return res.status(404).send("User not found");
-    }
-
-    const purchasedEvents = user.purchasedTickets.map(
-      (ticket) => ticket.eventId
-    );
-
-    res.status(200).json(purchasedEvents);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Internal Server Error");
-  }
-};
-
 module.exports = {
   getAllUsers,
   getUser,
   updateUser,
   softDeleteUser,
-  getPurchasedEvents,
   changeUserRole,
 };

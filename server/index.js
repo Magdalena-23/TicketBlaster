@@ -5,6 +5,7 @@ const express = require("express");
 const authRoute = require("./routes/auth");
 const eventsRoute = require("./routes/events");
 const usersRoute = require("./routes/users");
+const ticketsRoute = require("./routes/tickets");
 
 const api = express();
 
@@ -19,10 +20,11 @@ api.use(
   })
 );
 
-api.use(express.json());
+api.use(express.json({ limit: "10mb" }));
 api.use("/api/auth", authRoute);
 api.use("/api/events", eventsRoute);
 api.use("/api/users", usersRoute);
+api.use("/api/tickets", ticketsRoute);
 
 api.use((err, req, res, next) => {
   const errorStatus = err.status || 500;

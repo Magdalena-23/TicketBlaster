@@ -15,6 +15,10 @@ const ticketSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  isPurchased: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("Ticket", ticketSchema);
