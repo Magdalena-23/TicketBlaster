@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import classes from "./TicketsHistory.module.css";
 import EventItem from "../../components/events/EventItem";
 import { formatTime } from "../../helpers/timeFormat";
@@ -6,8 +6,11 @@ import Modal from "../../components/common/Modal/Modal";
 import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";
 import { decodeJwt } from "../../helpers/jwtDecode";
 import axios from "../../api/axios";
+import { LoadingContext } from "../../context/LoadingContext";
+import LoadingSpinner from "../../components/common/LoadingSpinner/LoadingSpinner";
 
 function TicketsHistory(props) {
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [ticketsHistory, setTicketsHistory] = useState([]);
 
@@ -19,6 +22,7 @@ function TicketsHistory(props) {
 
   useEffect(() => {
     const getTicketsHistory = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(`/api/tickets/${userId}/${true}`);
 
@@ -29,6 +33,8 @@ function TicketsHistory(props) {
         setTicketsHistory(sortedTickets);
       } catch (err) {
         console.log(err);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -81,7 +87,9 @@ function TicketsHistory(props) {
         </Modal>
       )}
       <div className={classes.grid}>
-        {ticketsHistory.length === 0 ? (
+        {isLoading ? (
+          <LoadingSpinner />
+        ) : ticketsHistory.length === 0 ? (
           <span className={classes["no-items-found"]}>No tickets found</span>
         ) : (
           ticketsHistory.map((event) => {

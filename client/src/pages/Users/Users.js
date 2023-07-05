@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";
 import axios from "../../api/axios";
 import User from "./User";
 import { decodeJwt } from "../../helpers/jwtDecode";
 import ConfirmModal from "../../components/common/Modal/ConfirmModal";
+import { LoadingContext } from "../../context/LoadingContext";
+import LoadingSpinner from "../../components/common/LoadingSpinner/LoadingSpinner";
 
 const Users = () => {
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
   const [users, setUsers] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showMakeAdminModal, setShowMakeAdminModal] = useState(false);
@@ -18,6 +21,7 @@ const Users = () => {
   }, []);
 
   const fetchUsers = async () => {
+    setIsLoading(true);
     try {
       const userId = decodeJwt();
       const token = localStorage.getItem("token");
@@ -31,6 +35,8 @@ const Users = () => {
       setUsers(filteredUsers);
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -105,32 +111,35 @@ const Users = () => {
           onConfirm={() => handleRoleChange(selectedUserId, isAdmin)}
         />
       )}
-
       <LoggedInNav header="Users" />
-      {users.map((user) => (
-        <User
-          id={user._id}
-          key={user._id}
-          img={user.img}
-          fullName={user.fullName}
-          email={user.email}
-          isAdmin={user.isAdmin}
-          handleShowDeleteModal={() => {
-            setShowDeleteModal(true);
-            setSelectedUserId(user._id);
-          }}
-          handleShowAdminModal={() => {
-            setShowMakeAdminModal(true);
-            setSelectedUserId(user._id);
-            setIsAdmin(user.isAdmin);
-          }}
-          handleShowUserModal={() => {
-            setShowMakeUserModal(true);
-            setSelectedUserId(user._id);
-            setIsAdmin(user.isAdmin);
-          }}
-        />
-      ))}
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        users.map((user) => (
+          <User
+            id={user._id}
+            key={user._id}
+            img={user.img}
+            fullName={user.fullName}
+            email={user.email}
+            isAdmin={user.isAdmin}
+            handleShowDeleteModal={() => {
+              setShowDeleteModal(true);
+              setSelectedUserId(user._id);
+            }}
+            handleShowAdminModal={() => {
+              setShowMakeAdminModal(true);
+              setSelectedUserId(user._id);
+              setIsAdmin(user.isAdmin);
+            }}
+            handleShowUserModal={() => {
+              setShowMakeUserModal(true);
+              setSelectedUserId(user._id);
+              setIsAdmin(user.isAdmin);
+            }}
+          />
+        ))
+      )}
     </div>
   );
 };
