@@ -9,6 +9,7 @@ import LoadingSpinner from "../../components/common/LoadingSpinner/LoadingSpinne
 
 const Users = () => {
   const { isLoading, setIsLoading } = useContext(LoadingContext);
+
   const [users, setUsers] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [showMakeAdminModal, setShowMakeAdminModal] = useState(false);

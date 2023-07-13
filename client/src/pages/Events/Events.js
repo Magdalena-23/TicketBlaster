@@ -1,23 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import classes from "./Events.module.css";
 import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";
 import Button from "../../components/common/Button/Button";
 import ConfirmModal from "../../components/common/Modal/ConfirmModal";
 import axios from "../../api/axios";
 import { formatTime } from "../../helpers/timeFormat";
+import { LoadingContext } from "../../context/LoadingContext";
+import LoadingSpinner from "../../components/common/LoadingSpinner/LoadingSpinner";
 
 const Events = () => {
+  const { isLoading, setIsLoading } = useContext(LoadingContext);
+
   const [events, setEvents] = useState([]);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [selectedEventId, setSelectedEventId] = useState("");
 
   useEffect(() => {
+    setIsLoading(true);
     const getAllEvents = async () => {
       try {
         const response = await axios.get("/api/events");
         setEvents(response.data);
       } catch (err) {
         console.log(err);
+      } finally {
+        setIsLoading(false);
       }
     };
     getAllEvents();
@@ -50,37 +57,43 @@ const Events = () => {
           }}
         />
       )}
-      {events.map((event) => {
-        return (
-          <div key={event._id} className={`${classes["event-item"]}`}>
-            <div className={classes.flex}>
-              <div className={classes["img-container"]}>
-                <img src={event.img} alt="event" />
-              </div>
-              <div className={classes.left}>
-                <h2>{event.artist}</h2>
-                <div className={classes.gap}>
-                  <span className={classes.date}>{formatTime(event.date)}</span>
-                  <span className={classes.location}>
-                    {event.city}, {event.country}
-                  </span>
+      {isLoading ? (
+        <LoadingSpinner />
+      ) : (
+        events.map((event) => {
+          return (
+            <div key={event._id} className={`${classes["event-item"]}`}>
+              <div className={classes.flex}>
+                <div className={classes["img-container"]}>
+                  <img src={event.img} alt="event" />
+                </div>
+                <div className={classes.left}>
+                  <h2>{event.artist}</h2>
+                  <div className={classes.gap}>
+                    <span className={classes.date}>
+                      {formatTime(event.date)}
+                    </span>
+                    <span className={classes.location}>
+                      {event.city}, {event.country}
+                    </span>
+                  </div>
                 </div>
               </div>
+              <div className={classes.right}>
+                <Button
+                  className={classes.btn}
+                  onClick={() => {
+                    setShowDeleteModal(true);
+                    setSelectedEventId(event._id);
+                  }}
+                >
+                  Delete Event
+                </Button>
+              </div>
             </div>
-            <div className={classes.right}>
-              <Button
-                className={classes.btn}
-                onClick={() => {
-                  setShowDeleteModal(true);
-                  setSelectedEventId(event._id);
-                }}
-              >
-                Delete Event
-              </Button>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })
+      )}
     </>
   );
 };
