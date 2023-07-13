@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import classes from "./ForgotPassword.module.css";
-import FormWrapper from "../../common/FormWrapper";
-import Input from "../../common/Input";
+import FormWrapper from "../../common/FormWrapper/FormWrapper";
+import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
 import axios from "../../../api/axios";
 import Title from "../../common/Title/Title";

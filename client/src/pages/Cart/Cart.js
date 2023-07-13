@@ -1,11 +1,11 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/common/Button/Button";
+import Title from "../../components/common/Title/Title";
 import classes from "./Cart.module.css";
-import Button from "../../common/Button/Button";
-import CartItem from "../CartItem/CartItem";
-import Title from "../../common/Title/Title";
+import CartItems from "../../components/cart/Cart/CartItems";
 
-const Cart = () => {
+const Cart = (props) => {
   const navigate = useNavigate();
 
   const goBack = () => {
@@ -15,14 +15,16 @@ const Cart = () => {
   return (
     <div>
       <Title>Shopping Cart</Title>
-      <CartItem />
-      <CartItem />
+      <CartItems />
       <div className={classes["btn-container"]}>
         <Button className={classes.btn} onClick={goBack}>
           Back
         </Button>
-        <Button className={`${classes.btn} ${classes["btn-pink"]}`}>
-          Check Out
+        <Button
+          className={`${classes.btn} ${classes["btn-pink"]}`}
+          onClick={() => navigate("/checkout")}
+        >
+          Checkout
         </Button>
       </div>
     </div>

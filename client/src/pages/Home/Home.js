@@ -24,6 +24,7 @@ function Home() {
       try {
         const response = await axios.get("/api/events/soonest?limit=1");
         const soonestEvent = response.data[0];
+        console.log(soonestEvent);
         setHeroEvent(soonestEvent);
       } catch (error) {
         console.error("Error fetching hero event:", error);
@@ -67,10 +68,7 @@ function Home() {
   return (
     <>
       <div className={classes.container}>
-        <img
-          src="https://www.adorama.com/alc/wp-content/uploads/2018/11/landscape-photography-tips-yosemite-valley-feature.jpg"
-          alt="event"
-        />
+        <img src={heroEvent.img} alt="event" />
         <div className={classes["event-info"]}>
           <div>
             <h3>{heroEvent.artist}</h3>

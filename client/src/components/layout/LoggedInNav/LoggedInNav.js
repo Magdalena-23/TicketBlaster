@@ -4,6 +4,7 @@ import classes from "./LoggedInNav.module.css";
 import { useAuth } from "../../../context/AuthContext";
 import Title from "../../common/Title/Title";
 import { decodeAdmin } from "../../../helpers/jwtDecode";
+import Button from "../../common/Button/Button";
 
 function LoggedInNav(props) {
   const { logout } = useAuth();
@@ -11,7 +12,14 @@ function LoggedInNav(props) {
 
   return (
     <div className={classes.container}>
-      <Title>{props.header}</Title>
+      <div className={classes.flex}>
+        <Title>{props.header}</Title>
+        {props.btn && (
+          <NavLink to="/create-event">
+            <Button className={classes.button}>Create Event</Button>
+          </NavLink>
+        )}
+      </div>
       <div className={classes["profile-nav"]}>
         {admin && (
           <NavLink

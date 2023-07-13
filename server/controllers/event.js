@@ -77,13 +77,18 @@ const getAllEvents = async (req, res, next) => {
   try {
     const { type, limit } = req.query;
     const currentDate = new Date();
+    let upcomingEvents;
 
-    const upcomingEvents = await Event.find({
-      eventType: type,
-      date: { $gte: currentDate },
-    })
-      .sort({ date: 1 })
-      .limit(limit);
+    if (type && limit) {
+      upcomingEvents = await Event.find({
+        eventType: type,
+        date: { $gte: currentDate },
+      })
+        .sort({ date: 1 })
+        .limit(limit);
+    } else {
+      upcomingEvents = await Event.find({});
+    }
 
     if (upcomingEvents.length === 0) {
       return res.status(404).json({ message: "No upcoming events found." });

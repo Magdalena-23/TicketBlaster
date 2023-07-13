@@ -8,14 +8,18 @@ import { decodeJwt } from "../../helpers/jwtDecode";
 import axios from "../../api/axios";
 import { LoadingContext } from "../../context/LoadingContext";
 import LoadingSpinner from "../../components/common/LoadingSpinner/LoadingSpinner";
+import QRCode from "react-qr-code";
 
 function TicketsHistory(props) {
   const { isLoading, setIsLoading } = useContext(LoadingContext);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [selectedQRCode, setSelectedRCode] = useState(null);
   const [ticketsHistory, setTicketsHistory] = useState([]);
 
-  const handlePrint = (event) => {
+  const handlePrint = (event, qrcode) => {
+    debugger;
     setSelectedEvent(event);
+    setSelectedRCode(qrcode);
   };
 
   const userId = decodeJwt();
@@ -26,9 +30,11 @@ function TicketsHistory(props) {
       try {
         const response = await axios.get(`/api/tickets/${userId}/${true}`);
 
-        const sortedTickets = response.data.sort((a, b) => {
-          return new Date(b.event.date) - new Date(a.event.date);
-        });
+        const sortedTickets = response.data
+          .filter((x) => x.event)
+          .sort((a, b) => {
+            return new Date(b.event.date) - new Date(a.event.date);
+          });
 
         setTicketsHistory(sortedTickets);
       } catch (err) {
@@ -60,10 +66,7 @@ function TicketsHistory(props) {
               />
             </svg>
             <div className={classes["img-container"]}>
-              <img
-                src="https://www.adorama.com/alc/wp-content/uploads/2018/11/landscape-photography-tips-yosemite-valley-feature.jpg"
-                alt="event"
-              />
+              <img src={selectedEvent.img} alt="event" />
             </div>
             <div className={classes["modal-info"]}>
               <div className={classes.left}>
@@ -76,11 +79,15 @@ function TicketsHistory(props) {
                 </span>
               </div>
               <div className={classes.right}>
-                <img
-                  src="https://www.adorama.com/alc/wp-content/uploads/2018/11/landscape-photography-tips-yosemite-valley-feature.jpg"
-                  alt="event"
-                  className={classes.barcode}
-                />
+                <div className={classes.qrcode}>
+                  <QRCode
+                    size={1024}
+                    style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+                    value={selectedQRCode.hashCode}
+                    viewBox={`0 0 256 256`}
+                    level="H"
+                  />
+                </div>
               </div>
             </div>
           </div>
@@ -112,6 +119,7 @@ function TicketsHistory(props) {
                 text="Print"
                 onPrint={handlePrint}
                 event={event.event}
+                qrcode={event.qrCode}
               />
             );
           })

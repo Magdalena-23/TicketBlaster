@@ -19,6 +19,10 @@ const ticketSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  qrCode: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "QrCode",
+  },
 });
 
 module.exports = mongoose.model("Ticket", ticketSchema);

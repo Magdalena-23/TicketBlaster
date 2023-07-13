@@ -16,9 +16,11 @@ import UserDetails from "../../pages/UserDetails/UserDetails";
 import Users from "../../pages/Users/Users";
 import EventDetails from "../../pages/EventDetails/EventDetails";
 import SearchResults from "../../pages/SearchResults/SearchResults";
-import Cart from "../cart/Cart/Cart";
 import Events from "../../pages/Events/Events";
 import CreateEvent from "../../pages/CreateEvent/CreateEvent";
+import Cart from "../../pages/Cart/Cart";
+import Checkout from "../../pages/Checkout/Checkout";
+import SuccessfulPayment from "../../pages/SuccessfulPayment/SuccessfulPayment";
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,9 +52,14 @@ const App = () => {
               <Route path="/search-results" element={<SearchResults />} />
               <Route path="/event-details/:id" element={<EventDetails />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/checkout" element={<Checkout />} />
               <Route path="/users" element={<Users />} />
               <Route path="/events" element={<Events />} />
               <Route path="/create-event" element={<CreateEvent />} />
+              <Route
+                path="/successful-payment"
+                element={<SuccessfulPayment />}
+              />
               {/* <Route element={<PrivateRoute />}> */}
               <Route
                 path="/tickets-history"

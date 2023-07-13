@@ -2,27 +2,53 @@ import React from "react";
 import classes from "./CartItem.module.css";
 import Button from "../../common/Button/Button";
 
-const CartItem = () => {
+const CartItem = (props) => {
+  const handleRemoveClick = () => {
+    props.handleRemove(props.id);
+  };
+
   return (
     <>
       <div className={`${classes["cart-item"]}`}>
-        <div className={classes.flex}>
-          <div className={classes["img-container"]}>
-            <img
-              src="https://www.adorama.com/alc/wp-content/uploads/2018/11/landscape-photography-tips-yosemite-valley-feature.jpg"
-              alt="event"
-            />
+        <div
+          className={`${classes.flex} ${
+            props.smaller ? classes["smaller-gap"] : classes["big-gap"]
+          }`}
+        >
+          <div
+            className={
+              props.smaller
+                ? classes["smaller-img-container"]
+                : classes["img-container"]
+            }
+          >
+            <img src={props.img} alt="event" />
           </div>
           <div className={classes.left}>
-            <h2>Incubus</h2>
-            <span className={classes.date}>June 9th, 2023</span>
-            <span className={classes.location}>Zagreb, Croatia</span>
+            <h2>{props.artist}</h2>
+            <span className={classes.date}>{props.date}</span>
+            <span className={classes.location}>
+              {props.city}, {props.country}
+            </span>
           </div>
         </div>
         <div className={classes.right}>
-          <div className={classes.price}>$120.00 USD</div>
-          <span className={classes.date}>2 x $60.00 USD</span>
-          <Button className={classes.btn}>Remove</Button>
+          <div className={classes.price}>
+            ${(props.quantity * props.price).toFixed(2)} USD
+          </div>
+          <span className={classes.date}>
+            {props.quantity} x $
+            {props.price !== undefined && props.price !== null
+              ? props.price.toFixed(2)
+              : ""}{" "}
+            USD
+          </span>
+          {!props.button && (
+            <Button className={classes.btn} onClick={handleRemoveClick}>
+              Remove
+            </Button>
+          )}
+          {props.children}
         </div>
       </div>
     </>

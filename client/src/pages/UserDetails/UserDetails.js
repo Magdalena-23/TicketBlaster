@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import classes from "./UserDetails.module.css";
-import Input from "../../components/common/Input";
+import Input from "../../components/common/Input/Input";
 import Button from "../../components/common/Button/Button";
 import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";
 import axios from "../../api/axios";
@@ -71,25 +71,6 @@ const UserDetails = () => {
       console.log("Error: ", error);
     };
   };
-
-  // const handleImageUpload = async (e) => {
-  //   e.preventDefault();
-
-  //   if (!img) {
-  //     return;
-  //   }
-
-  //   try {
-  //     const response = await axios.put(
-  //       `/api/users/${userId}`,
-  //       { img },
-  //       { headers: { "auth-token": token } }
-  //     );
-  //     console.log("User image uploaded:", response.data);
-  //   } catch (error) {
-  //     console.error("Error uploading user image:", error);
-  //   }
-  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -186,7 +167,7 @@ const UserDetails = () => {
                 label="Full Name"
                 onChange={handleFullNameChange}
                 value={fullName}
-                error={fullNameError}
+                // error={fullNameError}
               />
               <Input
                 style={classes.style}
@@ -195,7 +176,7 @@ const UserDetails = () => {
                 label="Email"
                 onChange={handleEmailChange}
                 value={email}
-                error={emailError}
+                // error={emailError}
               />
             </div>
           </div>
@@ -223,7 +204,7 @@ const UserDetails = () => {
                   label="Password"
                   onChange={handlePasswordChange}
                   value={password}
-                  error={passwordError}
+                  // error={passwordError}
                 />
                 <Input
                   style={classes.style}
@@ -232,7 +213,7 @@ const UserDetails = () => {
                   label="Re-type Password"
                   onChange={handleConfirmPasswordChange}
                   value={confirmPassword}
-                  error={confirmPasswordError}
+                  // error={confirmPasswordError}
                 />
               </div>
               <Button

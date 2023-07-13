@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import classes from "./Login.module.css";
-import FormWrapper from "../../common/FormWrapper";
-import Input from "../../common/Input";
+import FormWrapper from "../../common/FormWrapper/FormWrapper";
+import Input from "../../common/Input/Input";
 import Button from "../../common/Button/Button";
 import axios from "../../../api/axios";
 import { useState } from "react";

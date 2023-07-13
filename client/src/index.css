@@ -25,10 +25,12 @@ body {
 }
 
 input,
-button {
+button,
+textarea {
   font: inherit;
 }
 
-input:focus {
+input,
+textarea:focus {
   outline: none;
 }

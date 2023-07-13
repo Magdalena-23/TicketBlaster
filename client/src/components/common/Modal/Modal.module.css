@@ -9,10 +9,9 @@
 
 .modal {
   position: fixed;
-  /* top: 15vh;
-  left: 5%; */
-  top: 30%;
-  left: 34%;
+  top: 10%;
+  left: 30%;
+  transform: translate(-50%, -50%);
   background-color: white;
   padding: 27px 45px 40px 45px;
   border-radius: 30px;
