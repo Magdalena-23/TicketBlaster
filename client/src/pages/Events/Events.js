@@ -45,7 +45,7 @@ const Events = () => {
           btnText="Delete event"
           onCancel={() => setShowDeleteModal(false)}
           onConfirm={() => {
-            handleDelete();
+            handleDelete(selectedEventId);
             setShowDeleteModal(false);
           }}
         />
@@ -70,7 +70,10 @@ const Events = () => {
             <div className={classes.right}>
               <Button
                 className={classes.btn}
-                onClick={() => setShowDeleteModal(true)}
+                onClick={() => {
+                  setShowDeleteModal(true);
+                  setSelectedEventId(event._id);
+                }}
               >
                 Delete Event
               </Button>
