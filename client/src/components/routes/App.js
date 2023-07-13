@@ -14,10 +14,11 @@ import LayoutComponent from "../layout/LayoutComponent/LayoutComponent";
 import TicketsHistory from "../../pages/TicketsHistory/TicketsHistory";
 import UserDetails from "../../pages/UserDetails/UserDetails";
 import Users from "../../pages/Users/Users";
-// import PrivateRoute from "./PrivateRoute";
 import EventDetails from "../../pages/EventDetails/EventDetails";
 import SearchResults from "../../pages/SearchResults/SearchResults";
 import Cart from "../cart/Cart/Cart";
+import Events from "../../pages/Events/Events";
+import CreateEvent from "../../pages/CreateEvent/CreateEvent";
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -50,6 +51,8 @@ const App = () => {
               <Route path="/event-details/:id" element={<EventDetails />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/users" element={<Users />} />
+              <Route path="/events" element={<Events />} />
+              <Route path="/create-event" element={<CreateEvent />} />
               {/* <Route element={<PrivateRoute />}> */}
               <Route
                 path="/tickets-history"
