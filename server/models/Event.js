@@ -32,10 +32,12 @@ const eventSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  featured: {
-    type: Boolean,
-    default: false,
-  },
+  relatedEvents: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "RelatedEvent",
+    },
+  ],
 });
 
 module.exports = mongoose.model("Event", eventSchema);
