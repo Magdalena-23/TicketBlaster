@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import classes from "./CreateEvent.module.css";
 import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";
 import Input from "../../components/common/Input/Input";
 import Button from "../../components/common/Button/Button";
 import Dropdown from "../../components/common/Dropdown/Dropdown";
 import axios from "../../api/axios";
+import { formatTime } from "../../helpers/timeFormat";
 
 const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
@@ -15,7 +16,9 @@ const CreateEvent = () => {
   const [date, setDate] = useState();
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
+  const [relatedEventsOptions, setRelatedEventsOptions] = useState([]);
   const [relatedEvents, setRelatedEvents] = useState([]);
+  const [selectedRelatedEventId, setSelectedRelatedEventId] = useState("");
 
   const convertToBase64 = (e) => {
     console.log(e);
@@ -29,6 +32,20 @@ const CreateEvent = () => {
       console.log("Error: ", error);
     };
   };
+
+  useEffect(() => {
+    const fetchRelatedEvents = async () => {
+      try {
+        const response = await axios.get(`/api/events/type?type=${category}`);
+        setRelatedEventsOptions(response.data);
+        setRelatedEvents([response.data[0], response.data[1]]);
+        setSelectedRelatedEventId(response.data[0]._id);
+      } catch (error) {
+        console.error("Error fetching related events:", error);
+      }
+    };
+    fetchRelatedEvents();
+  }, [category]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -46,12 +63,38 @@ const CreateEvent = () => {
           country: selectedCountry,
           eventType: category,
           price: ticketPrice,
+          relatedEvents,
         },
         { headers: { "auth-token": token } }
       );
       console.log("Event created:", response.data);
     } catch (error) {
       console.error("Error creating an event:", error);
+    }
+  };
+
+  const handleAddRelatedEvent = (e) => {
+    e.preventDefault();
+    if (selectedRelatedEventId) {
+      const selectedEvent = relatedEventsOptions.find(
+        (event) => event._id === selectedRelatedEventId
+      );
+
+      // Check if the event is already present in the relatedEvents array
+      const isEventAlreadyAdded = relatedEvents.some(
+        (event) => event._id === selectedEvent._id
+      );
+
+      const isMaximumEventsReached = relatedEvents.length >= 2;
+
+      if (!isEventAlreadyAdded && !isMaximumEventsReached) {
+        setRelatedEvents((prevRelatedEvents) => [
+          ...prevRelatedEvents,
+          selectedEvent,
+        ]);
+      }
+
+      // setSelectedRelatedEventId("");
     }
   };
 
@@ -140,46 +183,60 @@ const CreateEvent = () => {
         </div>
       </div>
       <div className={classes.container}>
-        <Dropdown label="Related Events:">
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
+        <Dropdown
+          label="Related Events:"
+          value={selectedRelatedEventId}
+          onChange={(e) => setSelectedRelatedEventId(e.target.value)}
+        >
+          {relatedEventsOptions.map((event) => {
+            return (
+              <option key={event._id} value={event._id}>
+                {event.artist} - {formatTime(event.date)} - {event.city},{" "}
+                {event.country}
+              </option>
+            );
+          })}
         </Dropdown>
-        <Button className={`${classes.btn} ${classes["bigger-btn"]}`}>
+        <Button
+          onClick={handleAddRelatedEvent}
+          className={`${classes.btn} ${classes["bigger-btn"]}`}
+        >
           Add
         </Button>
       </div>
       <div className={classes.flex}>
-        <div className={classes["related-event"]}>
-          <div className={classes.left}>
-            <div className={classes.img}>
-              <img alt="" />
+        {relatedEvents.map((relatedEvent) => {
+          return (
+            <div key={relatedEvent._id} className={classes["related-event"]}>
+              <div className={classes.left}>
+                <div className={classes.img}>
+                  <img alt="" />
+                </div>
+              </div>
+              <div className={classes.right}>
+                <div className={classes["event-info"]}>
+                  <h2>{relatedEvent.artist}</h2>
+                  <span className={classes.date}>
+                    {formatTime(relatedEvent.date)}
+                  </span>
+                  <span className={classes.location}>
+                    {relatedEvent.city}, {relatedEvent.country}
+                  </span>
+                </div>
+                <Button
+                  onClick={() => {
+                    setRelatedEvents(
+                      relatedEvents.filter((e) => e._id !== relatedEvent._id)
+                    );
+                  }}
+                  className={classes["remove-btn"]}
+                >
+                  Remove
+                </Button>
+              </div>
             </div>
-          </div>
-          <div className={classes.right}>
-            <div className={classes["event-info"]}>
-              <h2>Norah Jones</h2>
-              <span className={classes.date}>June 9th, 2023</span>
-              <span className={classes.location}>Zagreb, Croatia</span>
-            </div>
-            <Button className={classes["remove-btn"]}>Remove</Button>
-          </div>
-        </div>
-        <div className={classes["related-event"]}>
-          <div className={classes.left}>
-            <div className={classes.img}>
-              <img alt="" />
-            </div>
-          </div>
-          <div className={classes.right}>
-            <div className={classes["event-info"]}>
-              <h2>Norah Jones</h2>
-              <span className={classes.date}>June 9th, 2023</span>
-              <span className={classes.location}>Zagreb, Croatia</span>
-            </div>
-            <Button className={classes["remove-btn"]}>Remove</Button>
-          </div>
-        </div>
+          );
+        })}
       </div>
       <div className={classes["btn-container"]}>
         <Button
