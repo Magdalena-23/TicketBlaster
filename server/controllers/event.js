@@ -1,12 +1,61 @@
 const Event = require("../models/Event");
+const RelatedEvent = require("../models/RelatedEvent");
+
+// const createEvent = async (req, res, next) => {
+//   try {
+//     const newEvent = new Event(req.body);
+//     const savedEvent = await newEvent.save();
+//     res.status(200).json(savedEvent);
+//   } catch (err) {
+//     next(err);
+//   }
+// };
 
 const createEvent = async (req, res, next) => {
   try {
-    const newEvent = new Event(req.body);
+    const {
+      artist,
+      description,
+      date,
+      eventType,
+      city,
+      country,
+      img,
+      price,
+      relatedEvents,
+    } = req.body;
+
+    // Create a new event
+    const newEvent = new Event({
+      artist,
+      description,
+      date,
+      eventType,
+      city,
+      country,
+      img,
+      price,
+      relatedEvents: [],
+    });
+
     const savedEvent = await newEvent.save();
-    res.status(200).json(savedEvent);
-  } catch (err) {
-    next(err);
+
+    // Fetch and add the related events
+    for (const relatedEventId of relatedEvents) {
+      const relatedEvent = await RelatedEvent.findById(relatedEventId);
+      if (relatedEvent) {
+        relatedEvent.events.push(savedEvent._id);
+        await relatedEvent.save();
+      }
+    }
+
+    // Update the event with related events
+    savedEvent.relatedEvents = relatedEvents;
+    await savedEvent.save();
+
+    res.status(201).json(savedEvent);
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -79,7 +128,7 @@ const getAllEvents = async (req, res, next) => {
     const currentDate = new Date();
     let upcomingEvents;
 
-    if (type && limit) {
+    if (type || limit) {
       upcomingEvents = await Event.find({
         eventType: type,
         date: { $gte: currentDate },
