@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import classes from "./CreateEvent.module.css";
 import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";
 import Input from "../../components/common/Input/Input";
 import Button from "../../components/common/Button/Button";
 import Dropdown from "../../components/common/Dropdown/Dropdown";
+import ErrorModal from "../../components/common/Modal/ConfirmAndErrorModal";
 import axios from "../../api/axios";
 import { formatTime } from "../../helpers/timeFormat";
 
@@ -11,14 +13,17 @@ const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
   const [eventDetails, setEventDetails] = useState("");
   const [eventPhoto, setEventPhoto] = useState("");
-  const [ticketPrice, setTicketPrice] = useState();
+  const [ticketPrice, setTicketPrice] = useState("");
   const [category, setCategory] = useState("Concert");
-  const [date, setDate] = useState();
+  const [date, setDate] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [relatedEventsOptions, setRelatedEventsOptions] = useState([]);
   const [relatedEvents, setRelatedEvents] = useState([]);
   const [selectedRelatedEventId, setSelectedRelatedEventId] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  const navigate = useNavigate();
 
   const convertToBase64 = (e) => {
     console.log(e);
@@ -50,6 +55,8 @@ const CreateEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const priceValue = parseFloat(ticketPrice);
+
     const token = localStorage.getItem("token");
     try {
       const response = await axios.post(
@@ -62,13 +69,15 @@ const CreateEvent = () => {
           city: selectedCity,
           country: selectedCountry,
           eventType: category,
-          price: ticketPrice,
+          price: priceValue,
           relatedEvents,
         },
         { headers: { "auth-token": token } }
       );
+      navigate("/events");
       console.log("Event created:", response.data);
     } catch (error) {
+      setShowModal(true);
       console.error("Error creating an event:", error);
     }
   };
@@ -100,6 +109,17 @@ const CreateEvent = () => {
 
   return (
     <form>
+      {showModal && (
+        <ErrorModal
+          title="Failed to create an event."
+          message="Please try again."
+          btnText="OK"
+          onConfirm={() => setShowModal(false)}
+          hideBtn={true}
+        >
+          Failed to update the event. Please try again.
+        </ErrorModal>
+      )}
       <LoggedInNav header="Events" />
       <div className={classes.flex}>
         <div className={classes["flex-column"]}>
