@@ -1,16 +1,6 @@
 const Event = require("../models/Event");
 const RelatedEvent = require("../models/RelatedEvent");
 
-// const createEvent = async (req, res, next) => {
-//   try {
-//     const newEvent = new Event(req.body);
-//     const savedEvent = await newEvent.save();
-//     res.status(200).json(savedEvent);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
 const createEvent = async (req, res, next) => {
   try {
     const {
@@ -84,7 +74,19 @@ const deleteEvent = async (req, res, next) => {
 const getEvent = async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);
-    res.status(200).json(event);
+
+    // Fetch the related events based on the IDs
+    const relatedEvents = await Event.find({
+      _id: { $in: event.relatedEvents },
+    });
+
+    // Combine the main event and related events into a single response
+    const eventWithRelated = {
+      ...event.toObject(),
+      relatedEvents: relatedEvents,
+    };
+
+    res.status(200).json(eventWithRelated);
   } catch (err) {
     next(err);
   }
