@@ -7,7 +7,7 @@ import { formatTime } from "../../helpers/timeFormat";
 import Button from "../../components/common/Button/Button";
 import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom";
-import ConfirmModal from "../../components/common/Modal/ConfirmModal";
+import ErrorModal from "../../components/common/Modal/ConfirmAndErrorModal";
 
 const UpdateEvent = () => {
   const [event, setEvent] = useState({});
@@ -125,7 +125,7 @@ const UpdateEvent = () => {
   return (
     <form>
       {showModal && (
-        <ConfirmModal
+        <ErrorModal
           title="Failed to update the event."
           message="Please try again."
           btnText="OK"
@@ -133,7 +133,7 @@ const UpdateEvent = () => {
           hideBtn={true}
         >
           Failed to update the event. Please try again.
-        </ConfirmModal>
+        </ErrorModal>
       )}
 
       <LoggedInNav header="Events" />

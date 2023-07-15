@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import classes from "./Events.module.css";
 import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";
 import Button from "../../components/common/Button/Button";
-import ConfirmModal from "../../components/common/Modal/ConfirmModal";
+import ConfirmModal from "../../components/common/Modal/ConfirmAndErrorModal";
 import axios from "../../api/axios";
 import { formatTime } from "../../helpers/timeFormat";
 import { LoadingContext } from "../../context/LoadingContext";

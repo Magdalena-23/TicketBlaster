@@ -31,3 +31,8 @@
   color: #000000;
   background-color: #ffffff;
 }
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+}

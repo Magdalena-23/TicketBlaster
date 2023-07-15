@@ -3,7 +3,7 @@ import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";
 import axios from "../../api/axios";
 import User from "./User";
 import { decodeJwt } from "../../helpers/jwtDecode";
-import ConfirmModal from "../../components/common/Modal/ConfirmModal";
+import ConfirmModal from "../../components/common/Modal/ConfirmAndErrorModal";
 import { LoadingContext } from "../../context/LoadingContext";
 import LoadingSpinner from "../../components/common/LoadingSpinner/LoadingSpinner";
 
