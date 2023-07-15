@@ -8,15 +8,16 @@ import Button from "../../components/common/Button/Button";
 import axios from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 import ErrorModal from "../../components/common/Modal/ConfirmAndErrorModal";
+import { format } from "date-fns";
 
 const UpdateEvent = () => {
   const [event, setEvent] = useState({});
   const [eventName, setEventName] = useState("");
   const [eventDetails, setEventDetails] = useState("");
   const [eventPhoto, setEventPhoto] = useState("");
-  const [ticketPrice, setTicketPrice] = useState();
+  const [ticketPrice, setTicketPrice] = useState("");
   const [category, setCategory] = useState("");
-  const [date, setDate] = useState();
+  const [date, setDate] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [relatedEventsOptions, setRelatedEventsOptions] = useState([]);
@@ -37,7 +38,10 @@ const UpdateEvent = () => {
       setEventPhoto(event.img);
       setTicketPrice(event.price);
       setCategory(event.eventType);
-      setDate(event.date);
+      const formattedDate = event.date
+        ? format(new Date(event.date), "yyyy-MM-dd")
+        : "";
+      setDate(formattedDate);
       setSelectedCountry(event.country);
       setSelectedCity(event.city);
       setRelatedEvents(event.relatedEvents);
@@ -74,6 +78,8 @@ const UpdateEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    const priceValue = parseFloat(ticketPrice);
+
     const token = localStorage.getItem("token");
     try {
       const response = await axios.put(
@@ -86,7 +92,7 @@ const UpdateEvent = () => {
           city: selectedCity,
           country: selectedCountry,
           eventType: category,
-          price: ticketPrice,
+          price: priceValue,
           relatedEvents,
         },
         { headers: { "auth-token": token } }
