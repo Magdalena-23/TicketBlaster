@@ -17,7 +17,6 @@ function TicketsHistory(props) {
   const [ticketsHistory, setTicketsHistory] = useState([]);
 
   const handlePrint = (event, qrcode) => {
-    debugger;
     setSelectedEvent(event);
     setSelectedRCode(qrcode);
   };
