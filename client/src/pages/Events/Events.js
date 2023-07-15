@@ -7,6 +7,7 @@ import axios from "../../api/axios";
 import { formatTime } from "../../helpers/timeFormat";
 import { LoadingContext } from "../../context/LoadingContext";
 import LoadingSpinner from "../../components/common/LoadingSpinner/LoadingSpinner";
+import { Link } from "react-router-dom";
 
 const Events = () => {
   const { isLoading, setIsLoading } = useContext(LoadingContext);
@@ -68,7 +69,10 @@ const Events = () => {
                   <img src={event.img} alt="event" />
                 </div>
                 <div className={classes.left}>
-                  <h2>{event.artist}</h2>
+                  <Link to={`/update-event/${event._id}`}>
+                    <h2>{event.artist}</h2>
+                  </Link>
+
                   <div className={classes.gap}>
                     <span className={classes.date}>
                       {formatTime(event.date)}
