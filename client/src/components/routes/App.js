@@ -21,6 +21,7 @@ import CreateEvent from "../../pages/CreateEvent/CreateEvent";
 import Cart from "../../pages/Cart/Cart";
 import Checkout from "../../pages/Checkout/Checkout";
 import SuccessfulPayment from "../../pages/SuccessfulPayment/SuccessfulPayment";
+import UpdateEvent from "../../pages/UpdateEvent/UpdateEvent";
 
 const App = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -51,6 +52,7 @@ const App = () => {
               <Route path="/comedy-shows" element={<ComedyShows />} />
               <Route path="/search-results" element={<SearchResults />} />
               <Route path="/event-details/:id" element={<EventDetails />} />
+              <Route path="/update-event/:id" element={<UpdateEvent />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/checkout" element={<Checkout />} />
               <Route path="/users" element={<Users />} />
