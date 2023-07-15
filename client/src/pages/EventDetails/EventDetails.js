@@ -24,6 +24,8 @@ const EventDetails = () => {
     getEvent();
   }, []);
 
+  console.log(event);
+
   const userId = decodeJwt();
 
   const handleAddToCart = async () => {
@@ -87,8 +89,22 @@ const EventDetails = () => {
       </div>
       <h2>Related Acts</h2>
       <div className={classes.grid}>
-        <EventItem />
-        <EventItem />
+        {event.relatedEvents &&
+          event.relatedEvents.map((e) => {
+            return (
+              <EventItem
+                key={e._id}
+                id={e._id}
+                artist={e.artist}
+                img={e.img}
+                date={formatTime(e.date)}
+                city={e.city}
+                country={e.country}
+                description={e.description}
+                text="Print"
+              />
+            );
+          })}
       </div>
     </>
   );
