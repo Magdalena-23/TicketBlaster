@@ -112,13 +112,11 @@ const CreateEvent = () => {
       {showModal && (
         <ErrorModal
           title="Failed to create an event."
-          message="Please try again."
+          message="Please review your input and try again."
           btnText="OK"
           onConfirm={() => setShowModal(false)}
           hideBtn={true}
-        >
-          Failed to update the event. Please try again.
-        </ErrorModal>
+        ></ErrorModal>
       )}
       <LoggedInNav header="Events" />
       <div className={classes.flex}>
