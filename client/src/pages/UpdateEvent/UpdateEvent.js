@@ -78,6 +78,18 @@ const UpdateEvent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (
+      !eventName ||
+      !date ||
+      !ticketPrice ||
+      !eventDetails ||
+      !selectedCity ||
+      !selectedCountry
+    ) {
+      setShowModal(true);
+      return;
+    }
+
     const priceValue = parseFloat(ticketPrice);
 
     const token = localStorage.getItem("token");
@@ -133,13 +145,11 @@ const UpdateEvent = () => {
       {showModal && (
         <ErrorModal
           title="Failed to update the event."
-          message="Please try again."
+          message="Please review your input and try again."
           btnText="OK"
           onConfirm={() => setShowModal(false)}
           hideBtn={true}
-        >
-          Failed to update the event. Please try again.
-        </ErrorModal>
+        ></ErrorModal>
       )}
 
       <LoggedInNav header="Events" />
