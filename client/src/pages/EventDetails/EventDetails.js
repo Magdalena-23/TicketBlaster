@@ -22,9 +22,7 @@ const EventDetails = () => {
       setEvent(event);
     };
     getEvent();
-  }, []);
-
-  console.log(event);
+  }, [event]);
 
   const userId = decodeJwt();
 
@@ -101,7 +99,7 @@ const EventDetails = () => {
                 city={e.city}
                 country={e.country}
                 description={e.description}
-                text="Print"
+                text="Get Ticket"
               />
             );
           })}
