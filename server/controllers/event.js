@@ -15,11 +15,14 @@ const createEvent = async (req, res, next) => {
       relatedEvents,
     } = req.body;
 
+    // Convert the date string to a Date object
+    const eventDate = new Date(date);
+
     // Create a new event
     const newEvent = new Event({
       artist,
       description,
-      date,
+      date: eventDate,
       eventType,
       city,
       country,
@@ -51,9 +54,13 @@ const createEvent = async (req, res, next) => {
 
 const updateEvent = async (req, res, next) => {
   try {
+    const { date, ...rest } = req.body;
+
+    const eventDate = new Date(date);
+
     const updatedEvent = await Event.findByIdAndUpdate(
       req.params.id,
-      { $set: req.body },
+      { $set: { ...rest, date: eventDate } },
       { new: true }
     );
     res.status(200).json(updatedEvent);
