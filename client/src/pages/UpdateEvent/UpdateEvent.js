@@ -265,7 +265,7 @@ const UpdateEvent = () => {
             <div key={relatedEvent._id} className={classes["related-event"]}>
               <div className={classes.left}>
                 <div className={classes.img}>
-                  <img alt="" />
+                  <img alt="" src={relatedEvent.img} />
                 </div>
               </div>
               <div className={classes.right}>
