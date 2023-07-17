@@ -9,30 +9,12 @@
 
 .modal {
   position: fixed;
-  top: 10%;
-  left: 30%;
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 27px 45px 40px 45px;
   border-radius: 30px;
   box-shadow: 0 20px 40px #00000029;
   z-index: 30;
-  animation: slide-down 300ms ease-out forwards;
-}
-
-/* @media (min-width: 768px) {
-  .modal {
-    left: calc(50% - 20rem);
-  }
-} */
-
-@keyframes slide-down {
-  from {
-    opacity: 0;
-    transform: translateY(-3rem);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
