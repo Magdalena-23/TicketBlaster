@@ -3,9 +3,18 @@ const QrCode = require("../models/QrCode");
 
 const createCartItem = async (req, res) => {
   try {
-    const cartItem = new Ticket({ ...req.body });
-    await cartItem.save();
-    res.status(200).send(cartItem);
+    const { event, user } = req.body;
+    const existingCartItem = await Ticket.findOne({ event, user });
+
+    if (existingCartItem) {
+      existingCartItem.quantity += req.body.quantity;
+      await existingCartItem.save();
+      res.status(200).send(existingCartItem);
+    } else {
+      const cartItem = new Ticket({ ...req.body });
+      await cartItem.save();
+      res.status(200).send(cartItem);
+    }
   } catch (err) {
     console.error(err);
     res.status(500).send("Internal Server Error");
