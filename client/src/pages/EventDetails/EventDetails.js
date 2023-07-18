@@ -22,16 +22,18 @@ const EventDetails = () => {
       setEvent(event);
     };
     getEvent();
-  }, [event]);
+  }, []);
 
   const userId = decodeJwt();
 
   const handleAddToCart = async () => {
     try {
+      const quantityNumber = parseFloat(quantity);
+
       await axios.post("/api/tickets/cart-item", {
         event: event._id,
         user: userId,
-        quantity: quantity,
+        quantity: quantityNumber,
         isPurchased: false,
       });
       navigate("/cart");
