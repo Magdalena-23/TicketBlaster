@@ -14,15 +14,15 @@ const EventDetails = () => {
 
   const navigate = useNavigate();
 
+  const eventId = window.location.pathname.split("/").pop();
   useEffect(() => {
-    const eventId = window.location.pathname.split("/").pop();
     const getEvent = async () => {
       const response = await axios.get(`/api/events/find/${eventId}`);
       const event = response.data;
       setEvent(event);
     };
     getEvent();
-  }, []);
+  }, [eventId]);
 
   const userId = decodeJwt();
 
