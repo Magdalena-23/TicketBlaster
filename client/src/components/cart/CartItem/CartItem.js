@@ -7,9 +7,14 @@ const CartItem = (props) => {
     props.handleRemove(props.id);
   };
 
+  const handleClick = () => {
+    props.onPrint(props.event, props.qrcode);
+    props.openModal(true);
+  };
+
   return (
     <>
-      <div className={`${classes["cart-item"]}`}>
+      <div className={`${classes["cart-item"]} ${props.smaller ? classes['smaller'] : ''}`}>
         <div
           className={`${classes.flex} ${
             props.smaller ? classes["smaller-gap"] : classes["big-gap"]
@@ -32,7 +37,23 @@ const CartItem = (props) => {
             </span>
           </div>
         </div>
-        <div className={classes.right}>
+        {props.smaller && props.onPrint ? <div className={classes["right-wrapper"]}>
+        <div className={classes["text-right"]}>
+          <div className={classes.price}>
+            ${(props.quantity * props.price).toFixed(2)} USD
+          </div>
+          <span className={classes.date}>
+            {props.quantity} x $
+            {props.price !== undefined && props.price !== null
+              ? props.price.toFixed(2)
+              : ""}{" "}
+            USD
+          </span>
+        </div>
+            <Button className={classes.btn} onClick={handleClick}>
+              Print
+            </Button>
+        </div> : <div className={classes.right}>
           <div className={classes.price}>
             ${(props.quantity * props.price).toFixed(2)} USD
           </div>
@@ -48,8 +69,7 @@ const CartItem = (props) => {
               Remove
             </Button>
           )}
-          {props.children}
-        </div>
+        </div> }
       </div>
     </>
   );

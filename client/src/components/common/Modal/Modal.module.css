@@ -18,3 +18,7 @@
   box-shadow: 0 20px 40px #00000029;
   z-index: 30;
 }
+
+.printModal {
+  width: 534px;
+}

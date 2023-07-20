@@ -66,11 +66,30 @@
   font-weight: 700;
 }
 
+.smaller {
+  padding: 15px 0px;
+}
+
 .right {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   justify-content: center;
+  margin-left: 20px;
+}
+
+.right-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+.right-wrapper button {
+  margin: 0;
+}
+
+.text-right {
+  text-align: right;
 }
 
 .price {

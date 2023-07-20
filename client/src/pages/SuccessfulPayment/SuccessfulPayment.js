@@ -1,17 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
 import { useLocation } from "react-router-dom";
 import classes from "./SuccessfulPayment.module.css";
-import CartItem from "../../components/cart/CartItem/CartItem";
+import CartItem from "../../components/cart/CartItem/CartItem"
 import Title from "../../components/common/Title/Title";
 import { formatTime } from "../../helpers/timeFormat";
-import Button from "../../components/common/Button/Button";
+import PrintModal from "../../components/common/Modal/PrintModal/PrintModal";
 
 const SuccessfulPayment = (props) => {
   const location = useLocation();
   const cartItems = location.state.cartItems;
-  console.log(cartItems);
+  const [selectedEvent, setSelectedEvent] = useState(null);
+  const [showPrint, setShowPrint] = useState(false);
+
+  const handlePrint = (event) => {
+    setSelectedEvent(event);
+  };
+
   return (
     <div>
+     {showPrint && (
+        <PrintModal
+          onClose={() => setShowPrint(false)}
+          selectedEvent={selectedEvent}
+          print={true}
+        />
+      )}
       <Title>Thank you for your purchase!</Title>
       {cartItems.map((purchasedTicket) => {
         return (
@@ -25,10 +38,11 @@ const SuccessfulPayment = (props) => {
             date={formatTime(purchasedTicket.event.date)}
             price={purchasedTicket.event.price}
             quantity={purchasedTicket.quantity}
-            button={true}
-          >
-            <Button>Print</Button>
-          </CartItem>
+            text="Print"
+            smaller={true}
+            openModal={() => setShowPrint(true)}
+            onPrint={() => handlePrint(purchasedTicket.event)}
+          />
         );
       })}
     </div>

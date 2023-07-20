@@ -4,13 +4,13 @@ import { formatTime } from "../../../../helpers/timeFormat";
 import QRCode from "react-qr-code";
 import Modal from "../Modal";
 
-function PrintModal({ selectedEvent, onClose }) {
+function PrintModal({ selectedEvent, onClose, print }) {
   const eventDate = new Date(selectedEvent.date);
   const eventYear = eventDate.getFullYear();
   const qrCodeValue = `${selectedEvent.artist} ${selectedEvent.city} ${eventYear}`;
 
   return (
-    <Modal onClose={onClose}>
+    <Modal onClose={onClose} print={print}>
       <div className={classes.modal}>
         <svg
           xmlns="http://www.w3.org/2000/svg"
