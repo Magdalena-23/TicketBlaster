@@ -5,18 +5,20 @@ import Button from "../../components/common/Button/Button";
 import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";
 import axios from "../../api/axios";
 import { decodeJwt } from "../../helpers/jwtDecode";
+import ErrorModal from "../../components/common/Modal/ConfirmAndErrorModal";
+import SuccessModal from "../../components/common/Modal/ConfirmAndErrorModal";
 
 const UserDetails = () => {
   const [shouldShow, setShouldShow] = useState(false);
   const [img, setImg] = useState("");
   const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [fullName, setFullName] = useState("");
-  const [fullNameError, setFullNameError] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+  const [error, setError] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const userId = decodeJwt();
   const token = localStorage.getItem("token");
@@ -39,24 +41,18 @@ const UserDetails = () => {
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
-    setEmailError("");
   };
 
   const handleFullNameChange = (e) => {
     setFullName(e.target.value);
-    setFullNameError("");
   };
 
   const handlePasswordChange = (e) => {
     setPassword(e.target.value);
-    setPasswordError("");
-    setConfirmPasswordError("");
   };
 
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
-    setConfirmPasswordError("");
-    setPasswordError("");
   };
 
   const convertToBase64 = (e) => {
@@ -76,10 +72,12 @@ const UserDetails = () => {
     e.preventDefault();
 
     if (!fullName) {
-      setFullNameError("Name is required");
+      setError("Name is required");
+      setShowModal(true);
       return;
     } else if (!email) {
-      setEmailError("Email is required");
+      setError("Email is required");
+      setShowModal(true);
       return;
     }
 
@@ -90,7 +88,11 @@ const UserDetails = () => {
         { headers: { "auth-token": token } }
       );
       console.log("User data updated:", response.data);
+      setSuccess("User data updated successfully!");
+      setShowSuccessModal(true);
     } catch (error) {
+      setShowModal(true);
+      setError("Error updating user data. Please try again.");
       console.error("Error updating user data:", error);
     }
   };
@@ -99,16 +101,20 @@ const UserDetails = () => {
     e.preventDefault();
 
     if (!password) {
-      setPasswordError("Password is required");
+      setShowModal(true);
+      setError("Password is required!");
       return;
     } else if (password.trim().length < 6) {
-      setPasswordError("Password too short");
+      setShowModal(true);
+      setError("Password too short!");
       return;
     } else if (!confirmPassword) {
-      setConfirmPasswordError("Confirm Password is required");
+      setShowModal(true);
+      setError("Confirm Password is required!");
       return;
     } else if (confirmPassword !== password) {
-      setConfirmPasswordError("Passwords do not match");
+      setShowModal(true);
+      setError("Passwords do not match!");
       return;
     }
 
@@ -121,13 +127,35 @@ const UserDetails = () => {
       setPassword("");
       setConfirmPassword("");
       console.log("User data updated:", response.data);
+      setSuccess("Password changed!");
+      setShowSuccessModal(true);
     } catch (error) {
+      setShowModal(true);
+      setError("Error changing password. Please try again.");
       console.error("Error updating user data:", error);
     }
   };
 
   return (
     <>
+      {showModal && (
+        <ErrorModal
+          title="Failed to update data."
+          message={error}
+          btnText="OK"
+          onConfirm={() => setShowModal(false)}
+          hideBtn={true}
+        ></ErrorModal>
+      )}
+      {showSuccessModal && (
+        <SuccessModal
+          title="Success!"
+          message={success}
+          btnText="OK"
+          onConfirm={() => setShowSuccessModal(false)}
+          hideBtn={true}
+        ></SuccessModal>
+      )}
       <LoggedInNav header="User Details" />
       <div className={classes.container}>
         <div>
