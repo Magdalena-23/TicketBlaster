@@ -11,6 +11,7 @@ function Button(props) {
   }
   return (
     <button
+      type={props.type}
       className={`${buttonClass} ${props.className}`}
       onClick={props.onClick}
     >
