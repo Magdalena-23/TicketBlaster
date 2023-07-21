@@ -6,13 +6,15 @@ import Input from "../../components/common/Input/Input";
 import Button from "../../components/common/Button/Button";
 import Dropdown from "../../components/common/Dropdown/Dropdown";
 import ErrorModal from "../../components/common/Modal/ConfirmAndErrorModal";
-import axios from "../../api/axios";
+import axios from "axios";
+import axiosJSON from "../../api/axios";
 import { formatTime } from "../../helpers/timeFormat";
 
 const CreateEvent = () => {
   const [eventName, setEventName] = useState("");
   const [eventDetails, setEventDetails] = useState("");
   const [eventPhoto, setEventPhoto] = useState("");
+  const [eventPhotoURL, setEventPhotoURL] = useState("");
   const [ticketPrice, setTicketPrice] = useState("");
   const [category, setCategory] = useState("Concert");
   const [date, setDate] = useState("");
@@ -25,23 +27,12 @@ const CreateEvent = () => {
 
   const navigate = useNavigate();
 
-  const convertToBase64 = (e) => {
-    console.log(e);
-    var reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      console.log(reader.result);
-      setEventPhoto(reader.result);
-    };
-    reader.onerror = (error) => {
-      console.log("Error: ", error);
-    };
-  };
-
   useEffect(() => {
     const fetchRelatedEvents = async () => {
       try {
-        const response = await axios.get(`/api/events/type?type=${category}`);
+        const response = await axiosJSON.get(
+          `/api/events/type?type=${category}`
+        );
         setRelatedEventsOptions(response.data);
         setRelatedEvents([response.data[0], response.data[1]]);
         setSelectedRelatedEventId(response.data[0]._id);
@@ -59,10 +50,12 @@ const CreateEvent = () => {
 
     const token = localStorage.getItem("token");
     try {
-      const response = await axios.post(
+      const url =
+        "http://localhost:8080/uploads/" + eventPhotoURL.split("\\").pop();
+      const response = await axiosJSON.post(
         "/api/events",
         {
-          img: eventPhoto,
+          img: url,
           artist: eventName,
           date,
           description: eventDetails,
@@ -107,8 +100,44 @@ const CreateEvent = () => {
     }
   };
 
+  const handleImageUpload = async (imageFile) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", imageFile);
+
+      const response = await axios.post(
+        "http://localhost:8080/api/upload-img",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return response.data.imageUrl;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+
+    const imageURL = URL.createObjectURL(file);
+    setEventPhoto(imageURL);
+
+    try {
+      const imageURL = await handleImageUpload(file);
+      setEventPhotoURL(imageURL);
+      console.log("Image uploaded:", imageURL);
+    } catch (error) {
+      console.log("Error uploading image:", error);
+    }
+  };
+
   return (
-    <form>
+    <form encType="multipart/form-data" onSubmit={handleSubmit}>
       {showModal && (
         <ErrorModal
           title="Failed to create an event."
@@ -138,12 +167,13 @@ const CreateEvent = () => {
               id="upload"
               name="upload"
               accept="image/*"
-              onChange={convertToBase64}
+              onChange={handleFileChange}
             />
           </div>
           <div className={classes["img-container"]}>
-            <img src={eventPhoto} alt="" />
-            {!eventPhoto && (
+            {eventPhoto ? (
+              <img src={eventPhoto} alt="" />
+            ) : (
               <span className={classes["alt-text"]}>Event Photo</span>
             )}
           </div>
@@ -163,6 +193,7 @@ const CreateEvent = () => {
             <Input
               label="Date"
               type="date"
+              className={classes["date-input"]}
               value={date}
               onChange={(e) => setDate(e.target.value)}
             />
@@ -228,7 +259,7 @@ const CreateEvent = () => {
             <div key={relatedEvent._id} className={classes["related-event"]}>
               <div className={classes.left}>
                 <div className={classes.img}>
-                  <img alt="" />
+                  <img alt="" src={relatedEvent.img} />
                 </div>
               </div>
               <div className={classes.right}>
@@ -258,7 +289,7 @@ const CreateEvent = () => {
       </div>
       <div className={classes["btn-container"]}>
         <Button
-          onClick={handleSubmit}
+          type="submit"
           className={`${classes.btn} ${classes["bigger-btn"]} ${classes["save-btn"]}`}
         >
           Save

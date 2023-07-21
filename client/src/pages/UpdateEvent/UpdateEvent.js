@@ -5,7 +5,8 @@ import Input from "../../components/common/Input/Input";
 import Dropdown from "../../components/common/Dropdown/Dropdown";
 import { formatTime } from "../../helpers/timeFormat";
 import Button from "../../components/common/Button/Button";
-import axios from "../../api/axios";
+import axios from "axios";
+import axiosJSON from "../../api/axios";
 import { useNavigate } from "react-router-dom";
 import ErrorModal from "../../components/common/Modal/ConfirmAndErrorModal";
 import { format } from "date-fns";
@@ -15,6 +16,7 @@ const UpdateEvent = () => {
   const [eventName, setEventName] = useState("");
   const [eventDetails, setEventDetails] = useState("");
   const [eventPhoto, setEventPhoto] = useState("");
+  const [eventPhotoURL, setEventPhotoURL] = useState("");
   const [ticketPrice, setTicketPrice] = useState("");
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
@@ -30,11 +32,12 @@ const UpdateEvent = () => {
   useEffect(() => {
     const eventId = window.location.pathname.split("/").pop();
     const getEvent = async () => {
-      const response = await axios.get(`/api/events/find/${eventId}`);
+      const response = await axiosJSON.get(`/api/events/find/${eventId}`);
       const event = response.data;
       setEvent(event);
       setEventName(event.artist);
       setEventDetails(event.description);
+      setEventPhotoURL(event.img);
       setEventPhoto(event.img);
       setTicketPrice(event.price);
       setCategory(event.eventType);
@@ -49,23 +52,48 @@ const UpdateEvent = () => {
     getEvent();
   }, []);
 
-  const convertToBase64 = (e) => {
-    console.log(e);
-    var reader = new FileReader();
-    reader.readAsDataURL(e.target.files[0]);
-    reader.onload = () => {
-      console.log(reader.result);
-      setEventPhoto(reader.result);
-    };
-    reader.onerror = (error) => {
-      console.log("Error: ", error);
-    };
+  const handleImageUpload = async (imageFile) => {
+    try {
+      const formData = new FormData();
+      formData.append("image", imageFile);
+
+      const response = await axios.post(
+        "http://localhost:8080/api/upload-img",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      return response.data.imageUrl;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  const handleFileChange = async (event) => {
+    const file = event.target.files[0];
+
+    const imageURL = URL.createObjectURL(file);
+    setEventPhoto(imageURL);
+
+    try {
+      const imageURL = await handleImageUpload(file);
+      setEventPhotoURL(imageURL);
+      console.log("Image uploaded:", imageURL);
+    } catch (error) {
+      console.log("Error uploading image:", error);
+    }
   };
 
   useEffect(() => {
     const fetchRelatedEvents = async () => {
       try {
-        const response = await axios.get(`/api/events/type?type=${category}`);
+        const response = await axiosJSON.get(
+          `/api/events/type?type=${category}`
+        );
         setRelatedEventsOptions(response.data);
         setSelectedRelatedEventId(response.data[0]._id);
       } catch (error) {
@@ -94,7 +122,12 @@ const UpdateEvent = () => {
 
     const token = localStorage.getItem("token");
     try {
-      const response = await axios.put(
+      setEventPhoto(
+        "http://localhost:8080/uploads/" + eventPhotoURL.split("\\").pop()
+      );
+      // const url =
+      //   "http://localhost:8080/uploads/" + eventPhotoURL.split("\\").pop();
+      const response = await axiosJSON.put(
         `/api/events/${event._id}`,
         {
           img: eventPhoto,
@@ -141,7 +174,7 @@ const UpdateEvent = () => {
   };
 
   return (
-    <form>
+    <form encType="multipart/form-data" onSubmit={handleSubmit}>
       {showModal && (
         <ErrorModal
           title="Failed to update the event."
@@ -172,12 +205,13 @@ const UpdateEvent = () => {
               id="upload"
               name="upload"
               accept="image/*"
-              onChange={convertToBase64}
+              onChange={handleFileChange}
             />
           </div>
           <div className={classes["img-container"]}>
-            <img src={eventPhoto} alt="" />
-            {!eventPhoto && (
+            {eventPhoto ? (
+              <img src={eventPhoto} alt="" />
+            ) : (
               <span className={classes["alt-text"]}>Event Photo</span>
             )}
           </div>
@@ -295,7 +329,7 @@ const UpdateEvent = () => {
       </div>
       <div className={classes["btn-container"]}>
         <Button
-          onClick={handleSubmit}
+          type="submit"
           className={`${classes.btn} ${classes["bigger-btn"]} ${classes["save-btn"]}`}
         >
           Save
