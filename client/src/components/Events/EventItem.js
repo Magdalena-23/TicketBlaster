@@ -18,7 +18,14 @@ function EventItem(props) {
   return (
     <div className={`${classes["event-item"]} ${props.className}`}>
       <div className={classes["img-container"]}>
-        <img src={props.img} alt="event" />
+        <img
+          src={
+            props.img
+              ? props.img
+              : "https://img.freepik.com/free-photo/paper-texture_1194-6010.jpg"
+          }
+          alt="event"
+        />
       </div>
       <div className={classes.desc}>
         <h2>{props.artist}</h2>

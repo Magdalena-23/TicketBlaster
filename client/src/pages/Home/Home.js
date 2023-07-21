@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import Button from "../../components/common/Button/Button";
 import classes from "./Home.module.css";
 import EventItem from "../../components/events/EventItem";
@@ -24,7 +23,6 @@ function Home() {
       try {
         const response = await axios.get("/api/events/soonest?limit=1");
         const soonestEvent = response.data[0];
-        console.log(soonestEvent);
         setHeroEvent(soonestEvent);
       } catch (error) {
         console.error("Error fetching hero event:", error);
@@ -68,7 +66,14 @@ function Home() {
   return (
     <>
       <div className={classes.container}>
-        <img src={heroEvent.img} alt="event" />
+        <img
+          src={
+            heroEvent.img
+              ? heroEvent.img
+              : "https://img.freepik.com/free-photo/paper-texture_1194-6010.jpg"
+          }
+          alt="event"
+        />
         <div className={classes["event-info"]}>
           <div>
             <h3>{heroEvent.artist}</h3>
@@ -118,7 +123,6 @@ function Home() {
                 id={comedyShow._id}
                 artist={comedyShow.artist}
                 date={formatTime(new Date(comedyShow.date))}
-                location={comedyShow.location}
                 city={comedyShow.city}
                 country={comedyShow.country}
                 description={comedyShow.description}
