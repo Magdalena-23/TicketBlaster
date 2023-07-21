@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import classes from "./Login.module.css";
 import FormWrapper from "../../common/FormWrapper/FormWrapper";
 import Input from "../../common/Input/Input";
@@ -18,6 +18,7 @@ const Login = () => {
   const [errorMsg, setErrorMsg] = useState("");
 
   const { login } = useAuth();
+  const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -61,7 +62,17 @@ const Login = () => {
       );
       const accessToken = response?.data?.token;
       login(accessToken);
-      window.location.href = "/tickets-history";
+
+      const redirectedFromItem = JSON.parse(
+        localStorage.getItem("redirectedFromItem")
+      );
+      if (redirectedFromItem) {
+        const { event, quantity } = redirectedFromItem;
+        navigate(`/event-details/${event}`, { state: { quantity } });
+        localStorage.removeItem("redirectedFromItem");
+      } else {
+        window.location.href = "/tickets-history";
+      }
     } catch (err) {
       console.log(err);
       if (!err?.response) {
