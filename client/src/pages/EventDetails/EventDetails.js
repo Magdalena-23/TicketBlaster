@@ -27,6 +27,14 @@ const EventDetails = () => {
   const userId = decodeJwt();
 
   const handleAddToCart = async () => {
+    if (!userId) {
+      localStorage.setItem(
+        "redirectedFromItem",
+        JSON.stringify({ event: event._id, quantity })
+      );
+      navigate("/login");
+      return;
+    }
     try {
       const quantityNumber = parseFloat(quantity);
 
@@ -36,6 +44,8 @@ const EventDetails = () => {
         quantity: quantityNumber,
         isPurchased: false,
       });
+
+      localStorage.removeItem("redirectedFromItem");
       navigate("/cart");
     } catch (err) {
       console.log(err);
@@ -53,7 +63,14 @@ const EventDetails = () => {
       </div>
       <div className={`${classes["event-item"]}`}>
         <div className={classes["img-container"]}>
-          <img src={event.img} alt="event" />
+          <img
+            src={
+              event.img
+                ? event.img
+                : "https://img.freepik.com/free-photo/paper-texture_1194-6010.jpg"
+            }
+            alt="event"
+          />
         </div>
         <div className={classes.desc}>
           <div className={classes.about}>

@@ -50,6 +50,7 @@ function TicketsHistory() {
         <PrintModal
           onClose={() => setShowPrint(false)}
           selectedEvent={selectedEvent}
+          print={true}
         />
       )}
       <div className={classes.grid}>
