@@ -75,7 +75,7 @@ const EventDetails = () => {
         <div className={classes.desc}>
           <div className={classes.about}>
             <h2>About</h2>
-            <p>{event.description}</p>
+            <p style={{ whiteSpace: "pre-wrap" }}>{event.description}</p>
           </div>
           <div className={classes.tickets}>
             <div className={classes.flex}>
