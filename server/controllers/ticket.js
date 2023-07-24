@@ -4,7 +4,11 @@ const QrCode = require("../models/QrCode");
 const createCartItem = async (req, res) => {
   try {
     const { event, user } = req.body;
-    const existingCartItem = await Ticket.findOne({ event, user });
+    const existingCartItem = await Ticket.findOne({
+      event,
+      user,
+      isPurchased: false,
+    });
 
     if (existingCartItem) {
       existingCartItem.quantity += req.body.quantity;

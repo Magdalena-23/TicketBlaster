@@ -33,7 +33,7 @@ const Cart = (props) => {
     const getCartItems = async () => {
       try {
         const response = await axios.get(`/api/tickets/${userId}/${false}`);
-        setCartItems(response.data);
+        setCartItems(response.data.filter((x) => x.event));
       } catch (err) {
         console.log(err);
       } finally {
