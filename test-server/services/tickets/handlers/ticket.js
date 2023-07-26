@@ -1,5 +1,6 @@
-const Ticket = require("../models/Ticket");
-const QrCode = require("../models/QrCode");
+const Ticket = require("../../../models/Ticket");
+const Event = require("../../../models/Event");
+const QrCode = require("../../../models/QrCode");
 
 const createCartItem = async (req, res) => {
   try {

@@ -7,6 +7,7 @@ const eventsRoute = require("./routes/events");
 const usersRoute = require("./routes/users");
 const ticketsRoute = require("./routes/tickets");
 const uploadRoute = require("./routes/upload");
+const paymentRoute = require("./routes/payments");
 const path = require("path");
 
 const api = express();
@@ -28,6 +29,7 @@ api.use("/api/events", eventsRoute);
 api.use("/api/users", usersRoute);
 api.use("/api/tickets", ticketsRoute);
 api.use("/api/upload-img", uploadRoute);
+api.use("/api/payment", paymentRoute);
 
 api.use(express.static(path.join(__dirname, "public")));
 
