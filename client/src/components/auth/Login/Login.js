@@ -46,9 +46,6 @@ const Login = () => {
     } else if (password.trim().length === 0) {
       setPasswordError("Password is required");
       return;
-    } else if (password.trim().length < 6) {
-      setPasswordError("Password must be at least 6 characters");
-      return;
     }
 
     try {
@@ -71,7 +68,7 @@ const Login = () => {
         navigate(`/event-details/${event}`, { state: { quantity } });
         localStorage.removeItem("redirectedFromItem");
       } else {
-        window.location.href = "/tickets-history";
+        navigate("/tickets-history");
       }
     } catch (err) {
       console.log(err);
