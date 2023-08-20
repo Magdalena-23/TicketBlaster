@@ -3,20 +3,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 const AuthContext = createContext();
 
 const AuthContextProvider = (props) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(localStorage.getItem("token"));
   const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (token) {
-      // setTimeout(() => {
-      setUser({ token });
-      setIsLoading(false);
-    } //500);
-    // } else {
-    //   setIsLoading(false);
-    // }
-  }, []);
 
   const login = (token) => {
     localStorage.setItem("token", token);
