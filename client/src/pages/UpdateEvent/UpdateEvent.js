@@ -122,15 +122,12 @@ const UpdateEvent = () => {
 
     const token = localStorage.getItem("token");
     try {
-      setEventPhoto(
-        "http://localhost:8080/uploads/" + eventPhotoURL.split("\\").pop()
-      );
-      // const url =
-      //   "http://localhost:8080/uploads/" + eventPhotoURL.split("\\").pop();
+      const url =
+        "http://localhost:8080/uploads/" + eventPhotoURL.split("\\").pop();
       const response = await axiosJSON.put(
         `/api/events/${event._id}`,
         {
-          img: eventPhoto,
+          img: url,
           artist: eventName,
           date,
           description: eventDetails,
