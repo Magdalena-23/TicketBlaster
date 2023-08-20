@@ -9,3 +9,8 @@
   font-size: 24px;
   font-weight: 700;
 }
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.4;
+}
