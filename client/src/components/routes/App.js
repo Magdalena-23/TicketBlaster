@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Header from "../layout/Header/Header";
-import Login from "../auth/Login/Login";
+import Login from "../../pages/Login/Login";
 import MusicalConcerts from "../../pages/MusicalConcerts/MusicalConcerts";
 import ComedyShows from "../../pages/StandUpComedy/ComedyShows";
-import Register from "../auth/Register/Register";
-import ForgotPassword from "../auth/ForgotPassword/ForgotPassword";
-import ResetPassword from "../auth/ResetPassword/ResetPassword";
+import Register from "../../pages/Register/Register";
+import ForgotPassword from "../../pages/ForgotPassword/ForgotPassword";
+import ResetPassword from "../../pages/ResetPassword/ResetPassword";
 import Footer from "../layout/Footer/Footer";
 import Home from "../../pages/Home/Home";
 import LayoutComponent from "../layout/LayoutComponent/LayoutComponent";

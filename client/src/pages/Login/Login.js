@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import classes from "./Login.module.css";
-import FormWrapper from "../../common/FormWrapper/FormWrapper";
-import Input from "../../common/Input/Input";
-import Button from "../../common/Button/Button";
-import axios from "../../../api/axios";
+import FormWrapper from "../../components/common/FormWrapper/FormWrapper";
+import Input from "../../components/common/Input/Input";
+import Button from "../../components/common/Button/Button";
+import axios from "../../api/axios";
 import { useState } from "react";
-import { useAuth } from "../../../context/AuthContext";
-import Title from "../../common/Title/Title";
+import { useAuth } from "../../context/AuthContext";
+import Title from "../../components/common/Title/Title";
 
 const LOGIN_URL = "api/auth/login";
 

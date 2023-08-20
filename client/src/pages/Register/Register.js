@@ -1,12 +1,12 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
-import axios from "../../../api/axios";
-import FormWrapper from "../../common/FormWrapper/FormWrapper";
-import Input from "../../common/Input/Input";
+import axios from "../../api/axios";
+import FormWrapper from "../../components/common/FormWrapper/FormWrapper";
+import Input from "../../components/common/Input/Input";
 import classes from "./Register.module.css";
-import Button from "../../common/Button/Button";
-import Title from "../../common/Title/Title";
+import Button from "../../components/common/Button/Button";
+import Title from "../../components/common/Title/Title";
 const REGISTER_URL = "/api/auth/register";
 
 function Register() {
