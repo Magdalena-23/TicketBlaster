@@ -105,12 +105,14 @@ const forgotPassword = async (req, res) => {
     // Send the email using the Mailgun API:
     mailgun.messages().send(emailData, (error, body) => {
       if (error) {
-        console.log("Error sending email:", error);
+        const { statusCode } = error;
+        console.log("Error sending email:", error, statusCode);
+        return res.status(statusCode).send(error);
       } else {
         console.log("Email sent successfully!");
+        return res.status(200).send({ message: "Email has been sent!" });
       }
     });
-    res.status(200).send({ message: "Email has been sent!" });
   } catch (err) {
     console.log(err);
     res.status(500).send("ISE");

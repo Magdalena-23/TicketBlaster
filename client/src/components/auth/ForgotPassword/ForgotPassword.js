@@ -19,6 +19,7 @@ function ForgotPassword() {
     setEmail(e.target.value);
     setEmailError("");
     setErrorMsg("");
+    setMsg("");
   };
 
   const handleSubmit = async (e) => {
@@ -34,11 +35,20 @@ function ForgotPassword() {
     }
 
     try {
-      await axios.post(FORGOT_PASSWORD_URL, JSON.stringify({ email }), {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
-      setMsg("Email sent! Tap the link in that email to reset your password.");
+      const response = await axios.post(
+        FORGOT_PASSWORD_URL,
+        JSON.stringify({ email }),
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(response);
+      if (response.status === 200) {
+        setMsg(
+          "Email sent! Tap the link in that email to reset your password."
+        );
+      }
     } catch (err) {
       console.log(err);
       if (!err?.response) {
