@@ -1,6 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState } from "react";
-
 import Header from "../layout/Header/Header";
 import Login from "../auth/Login/Login";
 import MusicalConcerts from "../../pages/MusicalConcerts/MusicalConcerts";
@@ -22,17 +20,9 @@ import Cart from "../../pages/Cart/Cart";
 import Checkout from "../../pages/Checkout/Checkout";
 import SuccessfulPayment from "../../pages/SuccessfulPayment/SuccessfulPayment";
 import UpdateEvent from "../../pages/UpdateEvent/UpdateEvent";
+import PrivateRoute from "./PrivateRoute";
 
 const App = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
   return (
     <BrowserRouter>
       <div className="App">
@@ -40,6 +30,22 @@ const App = () => {
         <div className="wrapper">
           <LayoutComponent>
             <Routes>
+              <Route element={<PrivateRoute />}>
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/checkout" element={<Checkout />} />
+                <Route path="/user-details" element={<UserDetails />} />
+                <Route path="/tickets-history" element={<TicketsHistory />} />
+                <Route path="/users" element={<Users />} />
+                <Route path="/events">
+                  <Route index element={<Events />} />
+                  <Route path="create-event" element={<CreateEvent />} />
+                  <Route path="update-event/:id" element={<UpdateEvent />} />
+                </Route>
+                <Route
+                  path="/successful-payment"
+                  element={<SuccessfulPayment />}
+                />
+              </Route>
               <Route exact path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
@@ -48,35 +54,10 @@ const App = () => {
                 path="/reset-password/:token"
                 element={<ResetPassword />}
               />
+              <Route path="/event-details/:id" element={<EventDetails />} />
               <Route path="/musical-concerts" element={<MusicalConcerts />} />
               <Route path="/comedy-shows" element={<ComedyShows />} />
               <Route path="/search-results" element={<SearchResults />} />
-              <Route path="/event-details/:id" element={<EventDetails />} />
-              <Route path="/update-event/:id" element={<UpdateEvent />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/checkout" element={<Checkout />} />
-              <Route path="/users" element={<Users />} />
-              <Route path="/events" element={<Events />} />
-              <Route path="/create-event" element={<CreateEvent />} />
-              <Route
-                path="/successful-payment"
-                element={<SuccessfulPayment />}
-              />
-              {/* <Route element={<PrivateRoute />}> */}
-              <Route
-                path="/tickets-history"
-                element={
-                  <TicketsHistory
-                    onClose={closeModal}
-                    openModal={openModal}
-                    isModalOpen={isModalOpen}
-                  />
-                }
-              />
-              {/* </Route> */}
-              {/* <Route element={<PrivateRoute />}> */}
-              <Route path="/user-details" element={<UserDetails />} />
-              {/* </Route> */}
             </Routes>
           </LayoutComponent>
         </div>

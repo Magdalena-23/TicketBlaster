@@ -69,10 +69,9 @@ const Events = () => {
                   <img src={event.img} alt="event" />
                 </div>
                 <div className={classes.left}>
-                  <Link to={`/update-event/${event._id}`}>
+                  <Link to={`update-event/${event._id}`}>
                     <h2>{event.artist}</h2>
                   </Link>
-
                   <div className={classes.gap}>
                     <span className={classes.date}>
                       {formatTime(event.date)}

@@ -9,13 +9,14 @@ import Button from "../../common/Button/Button";
 function LoggedInNav(props) {
   const { logout } = useAuth();
   const admin = decodeAdmin();
+  const checkCreateEvent = window.location.pathname.includes("/events");
 
   return (
     <div className={classes.container}>
       <div className={classes.flex}>
         <Title>{props.header}</Title>
         {props.btn && (
-          <NavLink to="/create-event">
+          <NavLink to="create-event">
             <Button className={classes.button}>Create Event</Button>
           </NavLink>
         )}
@@ -24,9 +25,9 @@ function LoggedInNav(props) {
         {admin && (
           <NavLink
             to="/events"
-            className={({ isActive }) =>
-              isActive ? classes["active"] : undefined
-            }
+            className={() => {
+              return checkCreateEvent ? classes["active"] : undefined;
+            }}
             end
           >
             Events
