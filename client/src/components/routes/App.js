@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Header from "../layout/Header/Header";
 import Login from "../../pages/Login/Login";
 import MusicalConcerts from "../../pages/MusicalConcerts/MusicalConcerts";
@@ -58,6 +58,7 @@ const App = () => {
               <Route path="/musical-concerts" element={<MusicalConcerts />} />
               <Route path="/comedy-shows" element={<ComedyShows />} />
               <Route path="/search-results" element={<SearchResults />} />
+              <Route path="*" element={<Navigate to="/" />} />
             </Routes>
           </LayoutComponent>
         </div>

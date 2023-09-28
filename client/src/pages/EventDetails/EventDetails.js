@@ -7,8 +7,10 @@ import axios from "../../api/axios";
 import { formatTime } from "../../helpers/timeFormat";
 import Title from "../../components/common/Title/Title";
 import { decodeJwt } from "../../helpers/jwtDecode";
+import { useAuth } from "../../context/AuthContext";
 
 const EventDetails = () => {
+  const { user } = useAuth();
   const [event, setEvent] = useState({});
   const [quantity, setQuantity] = useState(1);
 
@@ -27,7 +29,7 @@ const EventDetails = () => {
   const userId = decodeJwt();
 
   const handleAddToCart = async () => {
-    if (!userId) {
+    if (!user) {
       localStorage.setItem(
         "redirectedFromItem",
         JSON.stringify({ event: event._id, quantity })

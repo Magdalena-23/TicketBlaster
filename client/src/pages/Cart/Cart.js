@@ -51,7 +51,6 @@ const Cart = (props) => {
   return (
     <div>
       <Title>Shopping Cart</Title>
-      {/* <CartItems /> */}
       {isLoading ? (
         <LoadingSpinner />
       ) : (
@@ -75,21 +74,21 @@ const Cart = (props) => {
                   handleRemove={() => handleRemove(item._id)}
                 />
               ))}
-              <div className={classes["btn-container"]}>
-                <Button className={classes.btn} onClick={goBack}>
-                  Back
-                </Button>
-                <Button
-                  className={`${classes.btn} ${classes["btn-pink"]}  ${
-                    cartItems.length === 0 ? classes.disabledBtn : ""
-                  }`}
-                  onClick={() => navigate("/checkout")}
-                >
-                  Checkout
-                </Button>
-              </div>
             </>
           )}
+          <div className={classes["btn-container"]}>
+            <Button className={classes.btn} onClick={goBack}>
+              Back
+            </Button>
+            <Button
+              className={`${classes.btn} ${classes["btn-pink"]}  ${
+                cartItems.length === 0 ? classes.disabledBtn : ""
+              }`}
+              onClick={() => navigate("/checkout")}
+            >
+              Checkout
+            </Button>
+          </div>
         </>
       )}
     </div>

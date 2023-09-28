@@ -121,9 +121,15 @@ const UpdateEvent = () => {
     const priceValue = parseFloat(ticketPrice);
 
     const token = localStorage.getItem("token");
+
+    let url = "";
     try {
-      const url =
-        "http://localhost:8080/uploads/" + eventPhotoURL.split("\\").pop();
+      if (eventPhotoURL.includes("http://localhost:8080/uploads/")) {
+        url = eventPhotoURL.split("\\").pop();
+      } else {
+        url =
+          "http://localhost:8080/uploads/" + eventPhotoURL.split("\\").pop();
+      }
       const response = await axiosJSON.put(
         `/api/events/${event._id}`,
         {
