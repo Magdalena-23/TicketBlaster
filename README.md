@@ -2,7 +2,7 @@
 ## About The Project
 Application that is intended for online sale of tickets for Music Concerts and Stand-up Comedy events, built with MERN (MongoDB, Express, React, Node.js) stack.
 
-![screencapture-ticketblaster](https://github.com/Magdalena-23/Semos-Final-Project/assets/114959243/167b8be0-091b-46f0-a0f6-2e6a757c122d)
+![screencapture-ticketblaster-2023-08-23-01_57_43](https://github.com/Magdalena-23/Semos-Final-Project/assets/114959243/9de8edf1-4bc8-4c4f-966a-c958d941fbaf)
 
 ## User Features
 - ******Discover Events:****** Browse and explore a wide variety of upcoming concerts and comedy shows.
