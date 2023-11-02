@@ -110,9 +110,11 @@ function Home() {
               />
             );
           })}
-          <Link to="/musical-concerts" onClick={handleClick}>
-            <Button className={classes.btn}>See All Musical Concerts</Button>
-          </Link>
+          {concerts.length > 4 && (
+            <Link to="/musical-concerts" onClick={handleClick}>
+              <Button className={classes.btn}>See All Musical Concerts</Button>
+            </Link>
+          )}
         </div>
         <div>
           <Title>Stand-up Comedy</Title>
@@ -131,11 +133,13 @@ function Home() {
               />
             );
           })}
-          <Link to="/comedy-shows" onClick={handleClick}>
-            <Button className={classes.btn}>
-              See All Stand-up Comedy Shows
-            </Button>
-          </Link>
+          {comedyShows.length > 4 && (
+            <Link to="/comedy-shows" onClick={handleClick}>
+              <Button className={classes.btn}>
+                See All Stand-up Comedy Shows
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
     </>

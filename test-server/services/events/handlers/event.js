@@ -81,9 +81,11 @@ const deleteEvent = async (req, res, next) => {
 const getEvent = async (req, res, next) => {
   try {
     const event = await Event.findById(req.params.id);
+    const currentDate = new Date();
 
     // Fetch the related events based on the IDs
     const relatedEvents = await Event.find({
+      date: { $gte: currentDate },
       _id: { $in: event.relatedEvents },
     });
 
