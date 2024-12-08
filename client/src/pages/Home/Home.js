@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import Button from "../../components/common/Button/Button";
 import classes from "./Home.module.css";
-import EventItem from "../../components/events/EventItem";
+import EventItem from "../../components/Events/EventItem";
 import axios from "../../api/axios";
 import { formatTime } from "../../helpers/timeFormat";
 import Title from "../../components/common/Title/Title";

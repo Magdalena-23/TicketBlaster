@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import EventItem from "../../components/events/EventItem";
+import EventItem from "../../components/Events/EventItem";
 import Button from "../../components/common/Button/Button";
 import classes from "./MusicalConcerts.module.css";
 import axios from "../../api/axios";

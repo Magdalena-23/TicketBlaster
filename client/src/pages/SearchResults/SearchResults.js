@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "../../api/axios";
 import classes from "./SearchResults.module.css";
-import EventItem from "../../components/events/EventItem";
+import EventItem from "../../components/Events/EventItem";
 import Title from "../../components/common/Title/Title";
 import { formatTime } from "../../helpers/timeFormat";
 import { LoadingContext } from "../../context/LoadingContext";

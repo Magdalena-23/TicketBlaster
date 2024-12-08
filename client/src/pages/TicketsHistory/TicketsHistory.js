@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import classes from "./TicketsHistory.module.css";
-import EventItem from "../../components/events/EventItem";
+import EventItem from "../../components/Events/EventItem";
 import { formatTime } from "../../helpers/timeFormat";
 import PrintModal from "../../components/common/Modal/PrintModal/PrintModal";
 import LoggedInNav from "../../components/layout/LoggedInNav/LoggedInNav";

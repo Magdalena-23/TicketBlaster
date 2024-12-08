@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import classes from "./EventDetails.module.css";
-import EventItem from "../../components/events/EventItem";
+import EventItem from "../../components/Events/EventItem";
 import Button from "../../components/common/Button/Button";
 import axios from "../../api/axios";
 import { formatTime } from "../../helpers/timeFormat";

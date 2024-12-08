@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import EventItem from "../../components/events/EventItem";
+import EventItem from "../../components/Events/EventItem";
 import Button from "../../components/common/Button/Button";
 import classes from "../MusicalConcerts/MusicalConcerts.module.css";
 import { formatTime } from "../../helpers/timeFormat";
