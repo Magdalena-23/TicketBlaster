@@ -18,7 +18,7 @@ mongoose.connect(
 
 api.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://ticketblaster.netlify.app",
     credentials: true,
   })
 );
