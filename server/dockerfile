@@ -1,0 +1,20 @@
+# Base image with Node.js
+FROM node:18
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy all project files into the container
+COPY . .
+
+# Navigate to the server directory
+WORKDIR /app/server
+
+# Install dependencies
+RUN npm install
+
+# Expose the port your server runs on
+EXPOSE 8080
+
+# Command to start the server
+CMD ["node", "index.js"]
